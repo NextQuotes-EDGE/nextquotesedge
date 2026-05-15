@@ -2,19 +2,44 @@
 <img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
 </div>
 
-# Run and deploy your AI Studio app
+# NextQuotesEdge
 
-This contains everything you need to run your app locally.
+Engineering portfolio showcasing high-performance systems development for businesses and traders.
 
-View your app in AI Studio: https://ai.studio/apps/0546b9e5-b23c-4b67-bde3-bcd468de9b73
+Built with React 19, Vite 6, Tailwind CSS 4, and Decap CMS.
 
-## Run Locally
+## Local Development
 
-**Prerequisites:**  Node.js
+```bash
+npm install
+npm run dev
+```
 
+Open **http://localhost:5173**
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+## CMS (Content Management)
+
+Edit projects and site configuration at `/admin` via Decap CMS with GitHub OAuth.
+
+**Requires:** GitHub OAuth App + Vercel deployment (see below).
+
+## Deploy to Vercel
+
+1. Push to GitHub
+2. Import repo at https://vercel.com/new
+3. Build: `vite build` | Output: `dist`
+4. Create GitHub OAuth App at https://github.com/settings/developers
+5. Add `GITHUB_CLIENT_ID` and `GITHUB_CLIENT_SECRET` as Vercel environment variables
+6. Update `public/admin/config.yml` with your repo and Vercel URL
+
+## Structure
+
+```
+src/
+  components/     UI components (Navbar, Hero, About, etc.)
+  content/        Project MDX files and site config
+  lib/            Data fetching utilities
+  pages/          Route pages
+public/admin/     Decap CMS admin interface
+api/              Vercel serverless function for GitHub OAuth
+```
