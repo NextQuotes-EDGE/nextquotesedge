@@ -13,11 +13,15 @@ export default defineConfig(({mode}) => {
       {
         name: 'admin-redirect',
         configureServer(server) {
-          server.middlewares.use('/admin', (req, res) => {
-            const adminHtml = path.resolve(__dirname, 'public', 'admin', 'index.html');
-            res.statusCode = 200;
-            res.setHeader('Content-Type', 'text/html');
-            res.end(fs.readFileSync(adminHtml, 'utf-8'));
+          server.middlewares.use('/admin', (req, res, next) => {
+            if (req.url === '/' || req.url === '') {
+              const adminHtml = path.resolve(__dirname, 'public', 'admin', 'index.html');
+              res.statusCode = 200;
+              res.setHeader('Content-Type', 'text/html');
+              res.end(fs.readFileSync(adminHtml, 'utf-8'));
+            } else {
+              next();
+            }
           });
         },
       },
