@@ -1,0 +1,113 @@
+backend:
+  name: github
+  repo: YOUR_GITHUB_USERNAME/nextquotesedge
+  branch: main
+  base_url: https://YOUR_VERCEL_URL.vercel.app
+  auth_endpoint: api/auth
+
+publish_mode: editorial_workflow
+media_folder: public/images
+public_folder: /images
+
+collections:
+  - name: projects
+    label: Projects
+    label_singular: Project
+    folder: src/content/projects
+    create: true
+    delete: true
+    format: frontmatter
+    extension: mdx
+    fields:
+      - label: Title
+        name: title
+        widget: string
+      - label: Slug
+        name: slug
+        widget: string
+        hint: URL-friendly identifier (e.g. "my-project")
+      - label: Date
+        name: date
+        widget: date
+      - label: Summary
+        name: summary
+        widget: text
+      - label: Featured
+        name: featured
+        widget: boolean
+        default: false
+      - label: Status
+        name: status
+        widget: select
+        options:
+          - { label: Finished, value: Finished }
+          - { label: Ongoing, value: Ongoing }
+      - label: Categories
+        name: categories
+        widget: list
+      - label: Tech Stack
+        name: techStack
+        widget: list
+      - label: Project Link
+        name: projectLink
+        widget: string
+        required: false
+      - label: Test Link
+        name: testLink
+        widget: string
+        required: false
+      - label: Body
+        name: body
+        widget: markdown
+
+  - name: config
+    label: Site Configuration
+    files:
+      - label: Site Settings
+        name: site-config
+        file: src/content/site-config.json
+        fields:
+          - label: Brand Name
+            name: brandName
+            widget: string
+          - label: Role
+            name: role
+            widget: string
+          - label: WhatsApp Number
+            name: whatsappNumber
+            widget: string
+          - label: Hero
+            name: hero
+            widget: object
+            fields:
+              - { label: Title Prefix, name: titlePrefix, widget: string }
+              - { label: Title Highlight, name: titleHighlight, widget: string }
+              - { label: Title Suffix, name: titleSuffix, widget: string }
+              - { label: Subtext, name: subtext, widget: text }
+              - { label: CTA Text, name: ctaText, widget: string }
+          - label: About
+            name: about
+            widget: object
+            fields:
+              - { label: Title, name: title, widget: string }
+              - { label: Portrait URL, name: portraitUrl, widget: string }
+              - { label: Presence, name: presence, widget: string }
+              - label: Philosophy
+                name: philosophy
+                widget: list
+                fields:
+                  - { label: Title, name: title, widget: string }
+                  - { label: Text, name: text, widget: text }
+          - label: Services
+            name: services
+            widget: list
+            fields:
+              - { label: Title, name: title, widget: string }
+              - { label: Description, name: description, widget: text }
+              - label: Icon Type
+                name: iconType
+                widget: select
+                options:
+                  - { label: Layers, value: Layers }
+                  - { label: Zap, value: Zap }
+                  - { label: Cpu, value: Cpu }

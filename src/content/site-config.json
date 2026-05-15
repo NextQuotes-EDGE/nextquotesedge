@@ -1,0 +1,48 @@
+{
+  "brandName": "NextQuotesEdge",
+  "role": "System Architect & Engineer",
+  "hero": {
+    "titlePrefix": "We Build",
+    "titleHighlight": "Reliable Systems",
+    "titleSuffix": "for High-Stake Environments",
+    "subtext": "Engineering depth meets market precision. From high-frequency trading bots to robust enterprise infrastructure, We design systems that don't just work—they scale under pressure.",
+    "ctaText": "Explore Projects"
+  },
+  "about": {
+    "title": "Philosophy & Approach",
+    "philosophy": [
+      {
+        "title": "Reliability First",
+        "text": "Code isn't finished when it works; it's finished when it can't fail silently. We prioritize observability and fault tolerance in every system."
+      },
+      {
+        "title": "Scalability by Design",
+        "text": "Systems should handle growth without architectural rewrites. We build with distributed patterns and efficient data flows from day one."
+      },
+      {
+        "title": "Pragmatic Depth",
+        "text": "We believe in deep system thinking. Every feature is evaluated against its impact on performance, security, and long-term maintainability."
+      }
+    ],
+    "portraitUrl": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=800",
+    "presence": "Worldwide"
+  },
+  "services": [
+    {
+      "title": "Web System Development",
+      "description": "Scalable, high-concurrency backends and robust frontend architectures built for reliability.",
+      "iconType": "Layers"
+    },
+    {
+      "title": "Trading Tools & Automation",
+      "description": "Custom execution engines, arbitrage bots, and market analysis tools with sub-ms precision.",
+      "iconType": "Zap"
+    },
+    {
+      "title": "IT Infrastructure",
+      "description": "Distributed systems design, cloud migration, and performance optimization for growing businesses.",
+      "iconType": "Cpu"
+    }
+  ],
+  "whatsappNumber": "+1234567890"
+}
