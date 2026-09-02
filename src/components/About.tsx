@@ -62,7 +62,7 @@ export default function About() {
               className="inline-flex items-center gap-2 px-8 py-3 bg-brand text-white rounded-md font-bold hover:scale-105 active:scale-95 transition-all shadow-[0_0_20px_rgba(108,92,231,0.2)]"
               id="download-resume"
             >
-              <FileText className="w-5 h-5" /> Download Resume
+              <FileText className="w-5 h-5" /> View Resume
             </a>
             <div className="flex gap-6 items-center">
               <div className="flex flex-col">

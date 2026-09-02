@@ -34,9 +34,9 @@
       "iconType": "Layers"
     },
     {
-      "title": "Trading Tools & Automation",
-      "description": "Custom execution engines, arbitrage bots, and market analysis tools with sub-ms precision.",
-      "iconType": "Zap"
+      "title": "Database Systems",
+      "description": "Schema design, query optimization, replication, and high-availability data layers tuned for scale.",
+      "iconType": "Database"
     },
     {
       "title": "IT Infrastructure",

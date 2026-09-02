@@ -6,7 +6,7 @@ import CTA from '../components/CTA.tsx';
 import Navbar from '../components/Navbar.tsx';
 import { useProjects } from '../lib/projects.ts';
 import { useSiteConfig } from '../lib/config.ts';
-import { Layers, Zap, Cpu } from 'lucide-react';
+import { Layers, Zap, Cpu, Database } from 'lucide-react';
 
 export default function HomePage() {
   const { projects: allProjects } = useProjects();
@@ -18,6 +18,7 @@ export default function HomePage() {
       case 'Layers': return <Layers className="w-8 h-8 text-brand" />;
       case 'Zap': return <Zap className="w-8 h-8 text-brand" />;
       case 'Cpu': return <Cpu className="w-8 h-8 text-brand" />;
+      case 'Database': return <Database className="w-8 h-8 text-brand" />;
       default: return <Zap className="w-8 h-8 text-brand" />;
     }
   };
