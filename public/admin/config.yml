@@ -11,10 +11,6 @@ display_url: https://nextquotesedge.vercel.app
 logo_url: https://avatars.githubusercontent.com/u/189423475
 media_folder: public/images
 public_folder: /images
-media_library:
-  name: uploads
-  config:
-    multiple: true
 
 collections:
   - name: projects
