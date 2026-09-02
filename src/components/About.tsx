@@ -8,8 +8,8 @@ export default function About() {
   const engineeringPhilosophy = config.about.philosophy;
 
   return (
-    <section className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" id="about">
-      <div className="grid lg:grid-cols-2 gap-16 items-center">
+    <section className="py-16 md:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" id="about">
+      <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -38,7 +38,7 @@ export default function About() {
           <div className="inline-block px-3 py-1 rounded-full bg-brand/10 border border-brand/20 text-brand text-xs font-mono mb-6 uppercase tracking-widest">
             Engineering Strategy
           </div>
-          <h2 className="text-4xl lg:text-5xl font-bold mb-8">{config.about.title}</h2>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-8">{config.about.title}</h2>
           <div className="space-y-8 mb-12">
             {engineeringPhilosophy.map((item, idx) => (
               <motion.div 
@@ -67,7 +67,7 @@ export default function About() {
             <div className="flex gap-6 items-center">
               <div className="flex flex-col">
                 <span className="text-[10px] text-gray-500 uppercase tracking-[0.2em] mb-1">Portfolio</span>
-                <span className="text-white font-mono text-sm">2024 Edition</span>
+                <span className="text-white font-mono text-sm">{new Date().getFullYear()} Edition</span>
               </div>
               <div className="w-px h-8 bg-white/10" />
               <div className="flex flex-col">

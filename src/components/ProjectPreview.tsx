@@ -59,7 +59,7 @@ export default function ProjectPreview({ project, featured = false }: ProjectPre
       } hover:shadow-[0_30px_60px_rgba(108,92,231,0.2)]`}
       id={`project-preview-${project.slug}`}
     >
-      <div className={`p-8 flex flex-col justify-between ${featured ? 'md:border-r md:border-white/10' : ''}`}>
+      <div className={`p-6 sm:p-8 flex flex-col justify-between ${featured ? 'md:border-r md:border-white/10' : ''}`}>
         <div>
           <div className="flex flex-wrap items-center gap-2 mb-4">
             {project.status && (

@@ -56,19 +56,19 @@ export default function Hero() {
               <Zap className="w-3 h-3" /> {config.role}
             </motion.div>
             
-            <h1 className="text-5xl lg:text-7xl font-bold leading-[1.1] mb-6 tracking-tight" id="hero-title">
-              {config.hero.titlePrefix} <span className="text-brand">{config.hero.titleHighlight}</span> <br /> 
-              <span className="text-white/40">{config.hero.titleSuffix}</span>
+            <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold leading-[1.15] lg:leading-[1.1] mb-6 tracking-tight" id="hero-title">
+              {config.hero.titlePrefix} <span className="text-brand">{config.hero.titleHighlight}</span>{' '}
+              <span className="block lg:inline text-white/40">{config.hero.titleSuffix}</span>
             </h1>
             
-            <p className="text-xl text-gray-400 mb-10 leading-relaxed max-w-xl" id="hero-subtext">
+            <p className="text-lg sm:text-xl text-gray-400 mb-10 leading-relaxed max-w-xl" id="hero-subtext">
               {config.hero.subtext}
             </p>
             
-            <div className="flex flex-col sm:flex-row gap-4" id="hero-actions">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4" id="hero-actions">
               <Link
                 to="/projects"
-                className="inline-flex items-center justify-center gap-2 px-8 py-3 bg-white text-bg-dark rounded-md font-bold hover:bg-gray-100 transition-all shadow-[0_0_20px_rgba(255,255,255,0.1)]"
+                className="inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-white text-bg-dark rounded-md font-bold hover:bg-gray-100 transition-all shadow-[0_0_20px_rgba(255,255,255,0.1)]"
                 id="hero-projects-link"
               >
                 {config.hero.ctaText} <ArrowRight className="w-5 h-5" />

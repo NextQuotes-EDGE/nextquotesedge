@@ -7,8 +7,8 @@ export default function NotFoundPage() {
     <main className="min-h-screen bg-bg-dark flex flex-col items-center justify-center p-4">
       <Navbar />
       <div className="text-center">
-        <h1 className="text-9xl font-bold text-brand mb-4">404</h1>
-        <h2 className="text-3xl font-bold mb-8">System Address Not Found</h2>
+        <h1 className="text-7xl sm:text-9xl font-bold text-brand mb-4">404</h1>
+        <h2 className="text-2xl sm:text-3xl font-bold mb-8">System Address Not Found</h2>
         <p className="text-gray-400 mb-12 max-w-md mx-auto">
           The requested page does not exist or has been moved to a different node in the network.
         </p>

@@ -1,0 +1,78 @@
+// Shared contact logic used by the Vercel serverless function (api/contact.js)
+// and the Vite dev middleware (vite.config.ts) so behavior matches in both.
+
+import { Resend } from 'resend';
+
+export function validateContactPayload(body = {}) {
+  const trim = (value) => (typeof value === 'string' ? value.trim() : '');
+
+  const data = {
+    name: trim(body.name),
+    email: trim(body.email),
+    subject: trim(body.subject),
+    message: trim(body.message),
+  };
+
+  const errors = [];
+  if (!data.name) errors.push('Name is required.');
+  if (!data.email) errors.push('Email is required.');
+  else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
+    errors.push('Please provide a valid email address.');
+  }
+  if (!data.message) errors.push('Message is required.');
+  else if (data.message.length < 10) errors.push('Message must be at least 10 characters.');
+
+  return { data, errors };
+}
+
+export async function sendContactEmail({ name, email, subject, message }, env = process.env) {
+  const apiKey = env.RESEND_API_KEY;
+  const from = env.CONTACT_FROM_EMAIL;
+  const to = env.CONTACT_TO_EMAIL;
+
+  if (!apiKey || !from || !to) {
+    throw new Error('Contact email is not configured (RESEND_API_KEY, CONTACT_FROM_EMAIL, CONTACT_TO_EMAIL).');
+  }
+
+  const resend = new Resend(apiKey);
+  const fullSubject = `[Portfolio] ${subject || 'New inquiry'} from ${name}`;
+  const text = [
+    `Name: ${name}`,
+    `Email: ${email}`,
+    `Subject: ${subject || 'N/A'}`,
+    '',
+    message,
+  ].join('\n');
+  const html = `
+    <h2>New portfolio inquiry</h2>
+    <p><strong>Name:</strong> ${escapeHtml(name)}</p>
+    <p><strong>Email:</strong> ${escapeHtml(email)}</p>
+    <p><strong>Subject:</strong> ${escapeHtml(subject || 'N/A')}</p>
+    <hr />
+    <p style="white-space: pre-wrap;">${escapeHtml(message)}</p>
+  `;
+
+  const { data, error } = await resend.emails.send({
+    from,
+    to,
+    reply_to: email,
+    subject: fullSubject,
+    text,
+    html,
+  });
+
+  if (error) {
+    throw new Error(`Resend API error: ${error.message}`);
+  }
+
+  return data;
+}
+
+function escapeHtml(value) {
+  return value
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}

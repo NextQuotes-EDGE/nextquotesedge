@@ -59,7 +59,7 @@ export default function ProjectDetailPage() {
               </a>
             )}
           </div>
-          <h1 className="text-4xl lg:text-5xl font-bold mb-6">{project.title}</h1>
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6">{project.title}</h1>
           
           <div className="flex flex-wrap items-center gap-3 mb-8">
             {project.status && (

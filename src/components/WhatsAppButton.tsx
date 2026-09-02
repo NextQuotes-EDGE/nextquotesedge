@@ -31,7 +31,7 @@ export default function WhatsAppButton({ message, className, variant = 'primary'
       target="_blank"
       rel="noopener noreferrer"
       className={cn(
-        "inline-flex items-center gap-2 px-6 py-3 rounded-md font-medium transition-all",
+        "inline-flex items-center justify-center gap-2 px-6 py-3 rounded-md font-medium transition-all",
         variants[variant],
         className
       )}

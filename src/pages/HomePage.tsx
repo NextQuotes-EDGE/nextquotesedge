@@ -32,10 +32,10 @@ export default function HomePage() {
       <Navbar />
       <Hero />
 
-      <section className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" id="featured-projects">
-        <div className="flex items-end justify-between mb-12">
+      <section className="py-16 md:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" id="featured-projects">
+        <div className="flex items-end justify-between mb-10 md:mb-12">
           <div>
-            <h2 className="text-3xl font-bold mb-4">Featured Engineering</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold mb-4">Featured Engineering</h2>
             <p className="text-gray-400">Selected case studies demonstrating system architecture and problem-solving.</p>
           </div>
         </div>
@@ -46,15 +46,15 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="py-24 bg-white/[0.02]" id="services">
+      <section className="py-16 md:py-24 bg-white/[0.02]" id="services">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold mb-4">Expertise</h2>
+          <div className="text-center mb-12 md:mb-16">
+            <h2 className="text-2xl sm:text-3xl font-bold mb-4">Expertise</h2>
             <p className="text-gray-400 max-w-2xl mx-auto">Specializing in systems that require high performance and unwavering uptime.</p>
           </div>
           <div className="grid md:grid-cols-3 gap-8">
             {services.map((service, idx) => (
-              <div key={idx} className="p-8 bg-white/5 border border-white/10 rounded-xl hover:border-brand/40 transition-colors" id={`service-${idx}`}>
+              <div key={idx} className="p-6 md:p-8 bg-white/5 border border-white/10 rounded-xl hover:border-brand/40 transition-colors" id={`service-${idx}`}>
                 <div className="mb-6">{service.icon}</div>
                 <h3 className="text-xl font-bold mb-4">{service.title}</h3>
                 <p className="text-gray-400 leading-relaxed">{service.description}</p>

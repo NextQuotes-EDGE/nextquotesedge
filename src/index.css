@@ -9,16 +9,34 @@
 }
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
   body {
     @apply bg-bg-dark text-gray-200 antialiased font-sans cursor-default selection:bg-brand selection:text-white;
+    overflow-x: hidden;
+    -webkit-tap-highlight-color: transparent;
   }
 
   h1, h2, h3, h4, h5, h6 {
     @apply text-white font-medium tracking-tight;
   }
 
+  section[id] {
+    scroll-margin-top: 5rem;
+  }
+
   .markdown-body {
     @apply prose prose-invert max-w-none prose-indigo;
+  }
+
+  .markdown-body pre,
+  .markdown-body table,
+  .markdown-body img {
+    max-width: 100%;
+    overflow-x: auto;
   }
 }
 

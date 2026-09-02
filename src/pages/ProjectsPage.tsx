@@ -28,8 +28,8 @@ export default function ProjectsPage() {
       
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-24">
         <div className="mb-12">
-          <h1 className="text-4xl lg:text-6xl font-bold mb-6">Engineering Case Studies</h1>
-          <p className="text-xl text-gray-400 max-w-2xl">
+          <h1 className="text-3xl sm:text-4xl lg:text-6xl font-bold mb-6">Engineering Case Studies</h1>
+          <p className="text-lg sm:text-xl text-gray-400 max-w-2xl">
             A comprehensive look into my technical process, from initial constraints to final system deployment.
           </p>
         </div>
