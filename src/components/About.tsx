@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { FileText, Download } from 'lucide-react';
+import { Linkedin } from 'lucide-react';
 import { useSiteConfig } from '../lib/config.ts';
 
 export default function About() {
@@ -57,12 +57,13 @@ export default function About() {
 
           <div className="flex flex-wrap items-center gap-8">
             <a
-              href="/resume.pdf"
+              href="https://www.linkedin.com/in/roland-akusi-29a034bb/"
               target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-8 py-3 bg-brand text-white rounded-md font-bold hover:scale-105 active:scale-95 transition-all shadow-[0_0_20px_rgba(108,92,231,0.2)]"
-              id="download-resume"
+              id="linkedin-link"
             >
-              <FileText className="w-5 h-5" /> View Resume
+              <Linkedin className="w-5 h-5" /> Connect on LinkedIn
             </a>
             <div className="flex gap-6 items-center">
               <div className="flex flex-col">

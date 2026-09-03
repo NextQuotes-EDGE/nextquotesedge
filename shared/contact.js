@@ -65,7 +65,30 @@ export async function sendContactEmail({ name, email, subject, message }, env = 
     throw new Error(`Resend API error: ${error.message}`);
   }
 
+  await sendConfirmationEmail(resend, { from, name, email }, env).catch((err) => {
+    console.error('Failed to send confirmation email:', err);
+  });
+
   return data;
+}
+
+async function sendConfirmationEmail(resend, { from, name, email }, env = process.env) {
+  const templateId = env.CONTACT_CONFIRM_TEMPLATE_ID;
+  if (!templateId) return;
+
+  const { error } = await resend.emails.send({
+    from,
+    to: email,
+    subject: 'We received your message',
+    template: {
+      id: templateId,
+      variables: { NAME: name },
+    },
+  });
+
+  if (error) {
+    throw new Error(`Resend API error (confirmation): ${error.message}`);
+  }
 }
 
 function escapeHtml(value) {

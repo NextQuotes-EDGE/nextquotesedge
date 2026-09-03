@@ -5,7 +5,6 @@ backend:
   base_url: https://nextquotesedge.vercel.app
   auth_endpoint: api/auth
 
-publish_mode: editorial_workflow
 site_url: https://nextquotesedge.vercel.app
 display_url: https://nextquotesedge.vercel.app
 logo_url: /admin/logo.svg

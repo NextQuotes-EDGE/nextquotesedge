@@ -140,6 +140,17 @@
   border-color: rgba(108, 92, 231, 0.5);
 }
 
+.preview-badge.tech {
+  color: #6C5CE7;
+  background: rgba(108, 92, 231, 0.1);
+  border-color: rgba(108, 92, 231, 0.25);
+}
+
+.preview-markdown {
+  color: #a1a1aa;
+  margin-top: 16px;
+}
+
 .preview-summary {
   font-size: 1.125rem;
   color: #d4d4d8;
