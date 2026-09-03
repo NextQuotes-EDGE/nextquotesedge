@@ -15,19 +15,38 @@ highlights:
   - "Reliable secure exam execution for environments without stable connectivity"
 ---
 
-## Overview
+## Introduction
 
-NexEdge SecureTest (CBT Lite) is an offline Computer Based Test (CBT) system built for schools. It delivers reliable, secure exam execution over local networks — with real-time auto-save, session recovery, and instant result processing — designed for environments where exams must run without internet and without failure.
+Computer Based Testing (CBT) promised to modernize exams, but most platforms quietly assume something many schools, training centers, and high-stakes testing venues simply don't have: a stable internet connection. NexEdge SecureTest (CBT Lite) was built for the environments that products ignore — where power fluctuates, connectivity is a rumor, and an exam cannot be allowed to fail because the network dropped.
+
+## The Problem
+
+- **Internet is not a given.** In many venues, a single outage mid-exam can invalidate an entire sitting — candidates are told their work is lost and have to reschedule.
+- **Session loss is catastrophic.** The moment a candidate's connection (or the machine) drops is the moment their answers vanish, because no durable record was kept.
+- **Fragile infrastructure, strict stakes.** These are cases where the exam *must* run on schedule — offline, reliably — or the institution's entire academic calendar slips.
+
+## The Solution
+
+CBT Lite inverts the usual architecture: **the exam is delivered and graded over the local network, with no dependence on external internet access.** The critical reliability layer is a **real-time auto-save** that persists a candidate's progress continuously as they answer, combined with **session recovery** that restores the exact state if a session is ever interrupted. Submissions are **processed instantly** on completion, so results are authoritative and immediate.
+
+This is the reliability work that online-first exam platforms skip: making high-stakes testing *available* and *accurate* even when the infrastructure is hostile.
 
 ## Architecture
 
-The system pairs an **Express.js + PostgreSQL + Prisma** backend with a **Vite** frontend, using JWT for authentication. The offline-first design means the delivery mechanism is decoupled from external connectivity, so the exam session is resilient to network drops.
+- **Backend** — Express.js + PostgreSQL + Prisma, using **JWT** for authentication and enforcing secure delivery.
+- **Frontend** — a Vite-based client for the candidate experience.
+- **Offline-First** — the delivery mechanism and grading are decoupled from external connectivity so the session is resilient to network drops.
+- **Integrity** — authentication and submission controls keep the exam tamper-resistant.
 
-## Key Features
+## Impact
 
-- **Offline-First Delivery** — exams are served and graded over the local network, eliminating dependence on external internet access.
-- **Auto-Save & Recovery** — student progress is persisted continuously and restored seamlessly if a session is interrupted.
-- **Instant Results** — submissions are processed immediately for fast, accurate scoring.
-- **Secure Execution** — authentication and integrity controls keep exam delivery tamper-resistant.
+- **Exams run on schedule** regardless of connectivity — no more network-dependent cancellations.
+- **Nothing is lost** — auto-save and session recovery mean a dropped session resumes, not restarts.
+- **Results are instant** — grading completes at submission for fast, accurate scoring.
+- Institutions gain a **secure, self-contained** exam capability usable in exactly the places others fail.
 
-This project focuses on the reliability layer that traditional online-exam platforms overlook: keeping high-stakes testing available and accurate even when the infrastructure is not.
+## Lessons
+
+- **Design for the failure first.** Building the recovery path before the happy path is what made this reliable in the environments that matter.
+- **Offline is a harder problem than online.** Delivering gradeable, tamper-resistant exams with no connectivity forced a genuinely better architecture than a simple "online exam" would have been.
+- **Simplicity wins under strain.** A focused backend + resilient client beat a sprawling feature set that couldn't survive a power cut.

@@ -15,22 +15,44 @@ highlights:
   - "EAS build configuration ready for distribution"
 ---
 
-## Overview
+## Introduction
 
-Nayvi is a communications copilot delivered as a pair of applications: an **Expo React Native mobile app** and a **Next.js admin dashboard**, sharing a **Supabase** backend. The mobile app handles the user-facing conversation experience, while the dashboard provides management and oversight.
+Communication tools live on the user's phone, but the people who configure and manage them work on a desktop. That split is the root of most "copilot" product failures — a great mobile experience with no backend story, or a powerful dashboard with no mobile presence. Nayvi is a **communications copilot** built as two deliberate surfaces on one shared backend: an **Expo mobile app** for the user and a **Next.js admin dashboard** for oversight.
+
+## The Problem
+
+- **Two users, two devices.** The person using a communications copilot is on their phone; the person managing it is at a desk. A single-screen product serves neither well.
+- **Authentication must be frictionless.** No one installs a copilot and wants to fill out a username-and-password form; identity needs to be one tap with an existing provider.
+- **Real-time by default.** Communication is live, so the backend must support instant data flow, not periodic refresh.
+- **Distant attributes.** A mobile product that isn't built to ship to app stores is still a prototype; production readiness means a real build pipeline.
+
+## The Solution
+
+Nayvi pairs a **mobile-first user experience** with a **web-based management layer** sharing one source of truth:
+
+- **Mobile app** — Expo SDK 54 with React Native 0.81 and **expo-router** for clean navigation, delivering the conversation-driven experience where the user actually is.
+- **Google Sign-In** — authentication via `expo-auth-session` against **Supabase OAuth**, so getting in is one familiar tap.
+- **Admin dashboard** — a Next.js front end that makes configuration and oversight easy for the people who run it.
+- **Real-time backend** — Supabase (`@supabase/supabase-js`) provides auth, data, and live features in one managed service.
 
 ## Architecture
 
-- **Mobile App** — Expo SDK 54 with React Native 0.81, expo-router for navigation, and `expo-auth-session` for Google authentication.
-- **Backend** — Supabase (`@supabase/supabase-js`) for auth, data, and real-time features.
-- **Admin Dashboard** — Next.js front end for configuration and management.
-- **Deployment** — EAS (`eas.json`) configured for building and distributing the mobile app.
+Clear separation with a **cloud-managed core**:
 
-## Key Features
+- **Mobile** — Expo + React Native, expo-router navigation, Google auth.
+- **Backend** — Supabase for authentication, data storage, and real-time features.
+- **Admin** — Next.js web layer for management and configuration.
+- **Shipping** — **EAS (`eas.json`)** configured for building and distributing the mobile app to stores.
 
-- **Google Sign-In** — frictionless authentication through the Supabase OAuth flow.
-- **Mobile-First UX** — conversation-driven interface optimized for on-device use.
-- **Admin Oversight** — centralized management through the web dashboard.
-- **Ready to Ship** — production build configuration via Expo Application Services.
+## Impact
 
-Nayvi showcases a clean client + BaaS architecture spanning mobile and web, with a production-ready build pipeline.
+- The **user gets it where they are** — a native-feeling mobile copilot — while admins get a proper desktop console.
+- Frictionless **Google sign-in** removes the most common drop-off point in consumer AI apps.
+- Real-time Supabase channels keep data **live across both surfaces**.
+- A **production build pipeline** means the app is a step from stores, not a demo.
+
+## Lessons
+
+- **Match the surface to the user.** Splitting mobile experience from web oversight on one backend is the difference between a feature and a product.
+- **Managed backends accelerate delivery.** Supabase handled auth, data, and real-time so the team focused on the experience that differentiates.
+- **Ship-ready is a decision you make early.** Wiring EAS from the start kept "it works on my device" from being the definition of done.

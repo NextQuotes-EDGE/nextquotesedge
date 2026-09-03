@@ -15,21 +15,39 @@ highlights:
   - "Role/team-based access with reporting and auditing"
 ---
 
-## Overview
+## Introduction
 
-The BCS Charity Trust (Mercy Fellowship) platform is the official web presence for a charitable organization. It pairs a polished public site with a complete admin portal that lets staff manage donations, beneficiaries, volunteers, campaigns, CMS content, disbursements, and reports.
+The BCS Charity Trust (Mercy Fellowship) needed a modern, trusted web presence — and, more importantly, a way to run its charitable operations with the transparency and accountability donors expect. A nonprofit's credibility depends on being able to show where money comes in and, just as convincingly, where it goes out. This platform pairs a polished public site with a complete admin portal to make that accountability real.
+
+## The Problem
+
+- **Donors need to trust the organization.** An official, polished site builds legitimacy, but it means little if donations can't be collected securely or if the organization can't demonstrate how funds are used.
+- **Operations are spread thin.** Managing donations, beneficiaries, volunteers, campaigns, and disbursements across spreadsheets and emails is error-prone and opaque to leadership.
+- **Accountability requires reporting.** A charity must be able to produce clear reports on what it collected and what it disbursed — even if it's a small team, the books must look credible.
+- **Authorized access only.** Not every staff member should see every figure; roles and teams must keep financial data behind the right doors.
+
+## The Solution
+
+The platform is built around **one public face and one controlled admin core**:
+
+- **Public site** — a polished Next.js front end with campaign information, stories, and a **live Paystack donation checkout**, so giving is secure, frictionless, and immediate.
+- **Admin portal** — full management for **campaigns, beneficiaries, volunteers, CMS content, disbursements, and reports**.
+- **Role/team-based access** — permissions keep financial and programmatic data scoped to the people who should see it.
+- **Reporting & auditing** — the organization can generate reports and trace activity, the backbone of donor trust.
 
 ## Architecture
 
-Built with **Next.js 16 (App Router), React 19, TypeScript, and Tailwind CSS**, with Framer Motion for polished transitions. The core is a TypeScript/Next front end with a live **Paystack** payment flow for donations, and a mock-data-backed service layer for the admin modules so the full workflow is demonstrable end-to-end.
+Built with **Next.js 16 (App Router), React 19, TypeScript, and Tailwind CSS**, with **Framer Motion** for refined transitions. Donations flow through a real **Paystack** payment integration, while the admin modules sit on a service layer so the entire workflow is demonstrable end-to-end before going live. It's structured to deploy directly to Vercel for production use.
 
-## Key Features
+## Impact
 
-- **Live Donations** — real Paystack checkout for accepting contributions.
-- **Campaigns** — launch and track fundraising initiatives.
-- **Beneficiaries & Volunteers** — manage those the organization serves and supports.
-- **Disbursements** — record and report charitable payouts.
-- **CMS & Reporting** — edit public content and generate organizational reports.
-- **Roles & Teams** — role-based permissions across the admin portal.
+- Donors give through a **secure, branded channel**, raising confidence in the mission.
+- Staff manage **programs and funds** in one system instead of spreadsheets.
+- **Role-scoped access and reporting** give leadership — and the public — the visibility that sustains trust.
+- The platform is **production-ready**, deployable with real payments live.
 
-This is a real-world nonprofit platform, structured to be deployable on Vercel and ready for production use by the trust.
+## Lessons
+
+- **Trust is built with transparency.** The reporting and audit features are not bureaucracy — they are the product for a charity.
+- **One brand, two surfaces.** Keeping public polish and admin control as separate apps on a shared foundation respected both audiences.
+- **Payments are the trust moment.** Getting the Paystack flow secure and smooth was the single most important detail for converting visitors into donors.

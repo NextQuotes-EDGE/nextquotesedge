@@ -15,30 +15,43 @@ highlights:
   - "Audit logging and Nigerian states/LGA data for local eligibility"
 ---
 
-## Overview
+## Introduction
 
-The University Management System (UMS) is a comprehensive web-based academic administration platform designed to digitize the day-to-day operations of higher-education institutions. Built around role-based dashboards, it centralizes enrollment, results, attendance, finance and payroll, library, CBT exams, and analytics in a single coherent system.
+Universities are complex organizations. Students, lecturers, academic staff, administrative roles, finance teams, the library, and the exam office all depend on a shared body of institutional data — yet in most institutions each of these groups works from a different spreadsheet, a different hope, or a different legacy system. The University Management System (UMS) was built to unify that fragmented reality into a single platform every role can rely on.
+
+## The Problem
+
+Higher-education administration suffers from a specific kind of chaos:
+
+- **Role confusion.** One person's "register" is another's "enroll" and another's "invoice", so the same student journeys through three disconnected processes.
+- **Broken admissions.** Applicants had no single guided path, no way to verify JAMB registry data, and no local eligibility check that understood Nigerian state and LGA regulations.
+- **No single source of truth.** Results, attendance, fees, and library records lived in silos, so no dashboard could answer even basic questions about institutional health.
+- **Unaccountable changes.** With no audit trail, it was impossible to trace who changed a grade or a record — a serious trust problem for any academic body.
+
+## The Solution
+
+UMS treats the institution as **one domain modeled once**, not as separate apps stapled together. The entire system is organized around a clean service layer so that every module — admissions, results, attendance, finance, library, CBT exams, timetabling — reads and writes through the same consistent data and permission rules.
+
+The centerpiece is **role-based access control enforced at every layer**. Six dashboards (Admin, Academic Staff, Non-Academic Admin, Student, Lecturer) render different views of the same data. A student never sees the payroll ledger; an admin never sees the exam screen. The user's role is not a cosmetic skin — it drives what the system allows.
+
+Admissions were rebuilt as a **guided seven-step enrollment flow**, with live JAMB registry verification and eligibility checks that use real Nigerian states/LGA data to decide who can apply and how. Finance is ledger-aware, so every transaction traces to an accountable source.
 
 ## Architecture
 
-The project is organized as a **pnpm monorepo** with two major parts:
+- **Frontend** — React 18 + TypeScript on Vite, React Router v7, Tailwind CSS v4, shadcn/ui / Radix UI, and Recharts for analytics.
+- **Student Gateway Backend** — an Express + Prisma 6 service handling payments and admissions, hardened with JWT auth, rate-limiting, and zod input validation.
+- **Monorepo** — organized with **pnpm** so frontend and gateway stay in sync but deploy independently.
+- **Mock/live switch** — the service layer lets the UI run against mock data or a live API without changing components, which made development testable before the backend was complete.
 
-- **Frontend** — a React 18 + TypeScript app built with Vite, React Router v7, Tailwind CSS v4, and shadcn/ui / Radix UI components, using Recharts for analytics dashboards.
-- **Student Gateway Backend** — an Express + Prisma 6 service handling payments and admissions, secured with JWT auth, request rate-limiting, and zod input validation.
+## Impact
 
-Data flows are abstracted behind a service layer so the UI can run against mock data (with LocalStorage persistence) or a live API without changing components.
+- Students get one coherent enrollment journey instead of three disconnected processes.
+- Every role sees exactly the data it is permitted to see, enforcing institutional trust.
+- Administrators finally have aggregate dashboards — Recharts visualizations of enrollment, finance, and academic trends.
+- Every sensitive action is auditable, restoring accountability.
 
-## Key Modules
+## Lessons
 
-- **Admissions & Enrollment** — a guided seven-step application flow with live JAMB registry verification and eligibility checks based on Nigerian state/LGA data.
-- **Academic Records** — course registration, results management, and grade publishing per role.
-- **Attendance & Timetabling** — class tracking and scheduling.
-- **Finance & Payroll** — ledger-aware accounting for institutional staff.
-- **Library** — catalog and circulation management.
-- **CBT Exams** — integrated computer-based testing delivery.
-- **Reports & Analytics** — aggregate dashboards with Recharts visualizations.
-- **Audit Logs** — traceable administrative actions for accountability.
-
-## Why It Matters
-
-The system demonstrates how a large, multi-role domain can be modeled with clear separation of concerns: a design-system-driven frontend, a hardened gateway API, and role-based access that keeps every user's view scoped to their responsibilities.
+- **Model the domain once.** Reusing a single service layer across modules prevented the drift that happens when each team builds its own copy of the data.
+- **Permissions are a feature, not a bolt-on.** Investing RBAC early made every later module safer and faster to build.
+- **Localization is data.** Eligibility checks against real state/LGA data turned a generic "admissions" feature into a system that actually matches how Nigerian institutions operate.

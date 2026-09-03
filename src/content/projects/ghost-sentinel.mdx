@@ -14,18 +14,38 @@ highlights:
   - "GPG-signed immutable audit logs"
 ---
 
-## Overview
+## Introduction
 
-GhostSentinel is a security **architecture and design** for a dual-mode, AI-orchestrated vulnerability scanner. Inspired by Anthropic's Mythos, it is specified to integrate with Parrot OS 7.1+ native tooling — MCPwn, opencode, and Ollama LLMs — to drive autonomous recon, vulnerability discovery, and both red-team (offensive) and blue-team (defensive) workflows.
+Penetration testing and defensive security both suffer from the same bottleneck: **skilled human attention.** A security engineer can run hundreds of tools, but orchestrating them intelligently — deciding what to probe next, correlating findings, and turning raw output into an actionable attack path — is slow and expertise-bound. GhostSentinel is a security *architecture and design* for a system that hands **LLM-driven orchestration** to the security toolchain while keeping a human at every decision point that matters.
 
-## Design Scope
+## The Problem
 
-This project is currently a design/specification artifact rather than a shipped tool. It documents the full system:
+- **Manual orchestration doesn't scale.** Tools like nmap, sqlmap, Metasploit, and Suricata are individually powerful, but chaining them into a coherent assessment is laborious and error-prone.
+- **Two teams, two workflows, one base of knowledge.** Red teams need to *attack*, blue teams need to *defend* — against the same assets — yet their tooling is rarely coordinated.
+- **Autonomy is dangerous.** Letting any automated agent loose on a network risks collateral damage — hitting government, health, or critical-infrastructure targets with no authorization.
+- **Accountability is non-negotiable.** In adversarial security, every action must be provable and attributable, or the entire process is legally indefensible.
 
-- **Offensive Chain** — automated recon → vulnerability identification → an approval gate → AI-assisted exploit authoring in an isolated opencode session.
-- **Defensive Chain** — asset scanning → SIEM correlation → remediation workflows.
-- **Tool Orchestration** — coordinates over 800 Parrot OS security tools (nmap, sqlmap, Metasploit, Suricata, Wazuh, lynis) under LLM control.
-- **Safety Controls** — strict target whitelists, automatic blocking of government/health/critical-infrastructure scanning, and RFC 2350-compliant disclosure.
-- **Auditability** — GPG-signed, immutable logs of every action taken.
+## The Solution
 
-Presented here as an honest demonstration of security-system design and threat-modeling thinking, rather than a deployable product.
+GhostSentinel defines a **dual-mode system** — a red-team (offensive) chain and a blue-team (defensive) chain — both coordinated by a local LLM over **Parrot OS native tooling** (MCPwn, opencode, and Ollama). The design treats safety as the architecture, not a policy note:
+
+- **Offensive chain** — autonomous recon → vulnerability identification → an **explicit approval gate** → AI-assisted exploit authoring in an **isolated opencode session**, so generation happens in a sandboxed context.
+- **Defensive chain** — asset scanning → SIEM correlation → remediation workflows, so the same tooling protects rather than attacks.
+- **Strict safety rails** — a **target whitelist**, automatic blocking of government/health/critical-infrastructure scope, and **RFC 2350-compliant disclosure**.
+- **Immutable audit** — every action is **GPG-signed** into an immutable log.
+
+## Architecture
+
+GhostSentinel is a **specification and design artifact** today rather than a shipped tool. It documents the full blueprint: the role-based tool-access model, the orchestration flow, the approval gates, the sandboxing boundaries, and the audit trail. It demonstrates disciplined, threat-modeled thinking about how to let an AI drive 800+ security tools without surrendering control.
+
+## Impact
+
+- **Intended** — a single operator directs a coordinated offensive or defensive campaign in a fraction of the manual time.
+- **Intended** — the approval gate keeps the "interesting" part of autonomous hacking (exploit authoring) isolated and human-signed.
+- **Intended** — GPG-signed immutable logs turn activity into court-defensible evidence.
+
+## Lessons
+
+- **Autonomy must be walled off.** The parts of an agent that you want autonomous (recon, correlation) and the parts you must gate (exploit authoring) are different surfaces — treat them differently.
+- **Scope enforcement is the system.** Without hard whitelists and critical-target blocking, an autonomous scanner is just a liability with extra steps.
+- **Security automation protects the operator too.** A complete audit trail is what makes rigorous work legal to do. This design documents that discipline honestly — as design work, not as a falsely-claimed shipped product.

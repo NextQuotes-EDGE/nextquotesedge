@@ -14,21 +14,41 @@ highlights:
   - "Live analytics dashboards with Recharts"
 ---
 
-## Overview
+## Introduction
 
-EcoTrack is a modern campus waste-reporting and collection-tracking application. Students report waste issues and earn points, operators manage collection rounds, and admins see real-time analytics — all mapped live on an interactive canvas.
+Campus waste management has a visibility problem. Students don't know where to report an overflowing bin, operators don't know where the trucks need to be, and administrators have no live picture of whether collection is actually happening. EcoTrack was built to close that loop with real-time data — turning a slow, paper-based complaints process into a live, map-driven operation that everyone can see.
+
+## The Problem
+
+- **Reporting is a dead end.** A student who finds waste has no easy way to report it, and no idea whether anyone followed up — so they stop reporting at all.
+- **Operators fly blind.** Collection crews have no real-time view of where problems exist or where trucks are, leading to missed routes and wasted trips.
+- **No accountability.** Without live tracking, administrators can't see whether collection is happening, where the bottlenecks are, or how the campus actually performs on sustainability.
+
+## The Solution
+
+EcoTrack connects all three parties through **one real-time system**:
+
+- **Students report and get rewarded** — report a waste issue, earn gamified points, and see that their report was acted on.
+- **Operators see the live operation** — collection rounds, schedules, and a real-time map of where the trucks are.
+- **Admins get the truth** — live analytics dashboards showing reporting trends and collection performance against clear metrics.
+
+The centerpiece is **real-time tracking**: a server-side truck simulator streams live vehicle positions over **Socket.IO** onto an interactive **Leaflet** map, so the entire operation is visible as it happens — not reconstructed later from spreadsheets.
 
 ## Architecture
 
-- **Backend** — Express + Socket.IO for real-time updates, Prisma 7 + PostgreSQL (via `@prisma/adapter-pg`), with helmet, cors, rate limiting, JWT + bcrypt auth, and zod validation.
-- **Frontend** — React 19 + Vite, Tailwind v4 + shadcn/ui, React Router 7, Zustand for state, Recharts for dashboards, and react-leaflet for maps.
-- **Realtime** — a server-side truck simulator streams live vehicle positions over Socket.IO, modeling realistic collection operations.
+- **Backend** — Express + **Socket.IO** for live updates, Prisma 7 + PostgreSQL (via `@prisma/adapter-pg`), with helmet, cors, rate limiting, JWT + bcrypt auth, and zod validation.
+- **Frontend** — React 19 + Vite, Tailwind v4 + shadcn/ui, React Router 7, **Zustand** for state, **Recharts** for dashboards, and react-leaflet for maps.
+- **Realtime** — the truck simulator streams continuous positions, modeling realistic collection operations.
 
-## Key Features
+## Impact
 
-- **Student Waste Reporting** — report waste types, earn gamified points.
-- **Real-Time Tracking** — follow collection trucks live on a map.
-- **Operator Scheduling** — manage and coordinate collection rounds.
-- **Admin Analytics** — role-scoped dashboards for monitoring campus sustainability performance.
+- Reporting now has a **visible outcome**, restoring student participation via gamified points.
+- Operators coordinate from **live map data** instead of guesswork.
+- Administrators monitor campus sustainability through **real-time dashboards**.
+- The platform proves a complete interactive loop — report, dispatch, track, measure — in one system.
 
-EcoTrack is a functional full-stack prototype demonstrating real-time event streaming, geospatial mapping, and role-based multi-user interaction working together.
+## Lessons
+
+- **Realtime changes the product.** Socket.IO streaming turned a reporting form into a live operations platform — the map view is what made it feel real.
+- **Incentives drive participation.** The points system is what gets students to report at all; the loop was closed by making the feedback visible.
+- **Role-scoped views prevent overload.** Students, operators, and admins each see a different slice of the same data, and the abstraction kept that clean.

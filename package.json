@@ -23,15 +23,18 @@
     "react": "^19.0.1",
     "react-dom": "^19.0.1",
     "react-markdown": "^10.0.0",
-    "react-router-dom": "^7.1.5",
+    "react-router-dom": "^7.18.3",
     "resend": "^6.19.0",
     "tailwind-merge": "^3.0.1",
-    "vite": "^6.2.3"
+    "vite": "^6.4.3"
   },
   "devDependencies": {
     "@types/node": "^22.14.0",
     "tailwindcss": "^4.1.14",
     "typescript": "~5.8.2",
-    "vite": "^6.2.3"
+    "vite": "^6.4.3"
+  },
+  "overrides": {
+    "dompurify": "^3.4.14"
   }
 }

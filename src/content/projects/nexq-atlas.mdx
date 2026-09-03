@@ -16,27 +16,47 @@ highlights:
   - "Full observability: Prometheus + Grafana, Docker Compose infra, MinIO storage"
 ---
 
-## Overview
+## Introduction
 
-NexQ Atlas is a full-stack Retrieval-Augmented Generation (RAG) platform for ingesting, indexing, and querying technical documentation. It is built as a Turborepo / pnpm monorepo and is architected to run document pipelines at scale with queues, distributed storage, and local-first LLM inference.
+Technical teams drown in their own documentation. Manuals, repos, specs, and internal wikis grow faster than anyone can read them, and the information sits in formats no search engine handles well. NexQ Atlas is a full-stack Retrieval-Augmented Generation (RAG) platform built to make technical documentation *queryable by plain language* — and to do it without depending on sending proprietary content to third-party clouds.
+
+## The Problem
+
+- **Knowledge is trapped in files.** PDFs, `.docx`, `.md`, and GitHub repos hold the answers, but keyword search can't answer "how do I configure X when Y is down?".
+- **Hybrid questions need context.** A good answer requires pulling the *right passages* from different documents and *synthesizing* them — neither raw search nor a raw LLM can do it alone.
+- **Data can't leave the building.** For many organizations, shipping internal docs to external LLM APIs is a non-starter for privacy and cost. Local inference is a hard requirement.
+- **Answering is easy; being *right* is hard.** Without citations and retrieval inspection, an AI answer is just confident guesswork.
+
+## The Solution
+
+NexQ Atlas implements a **hybrid retrieval pipeline** that treats accuracy as an engineering problem, not an accident:
+
+1. **Ingest anything** — upload PDF/DOCX/MD/TXT/HTML, or import directly from GitHub and URLs.
+2. **Index semantically** — combine **pgvector embeddings with BM25** keyword search, then **cross-encode rerank** the candidates, then **expand the query** — so both conceptual and literal matches surface.
+3. **Generate with evidence** — an agent layer summarizes, compares, and cross-references the retrieved context.
+4. **Prove the answer** — every response streams back with **inline citations and a retrieval inspector**, so users can verify the source.
+
+Crucially, inference runs **locally via Ollama** (nomic-embed-text embeddings + llama3.2) by default, with pluggable OpenAI/Anthropic/Google providers for teams that can use them — the same platform serves both privacy-hard and cloud-friendly environments.
 
 ## Architecture
 
-The monorepo contains six packages: `frontend`, `backend`, `agent-engine`, `retrieval-engine`, `shared`, and `infrastructure`. Key pieces include:
+A **Turborepo / pnpm monorepo** with six packages: `frontend`, `backend`, `agent-engine`, `retrieval-engine`, `shared`, and `infrastructure`.
 
-- **Backend** — Express 4 with BullMQ queues, Pino logging, zod validation, PostgreSQL 16 + pgvector, Redis 7, and MinIO (S3-compatible object storage). JWT auth with refresh-token rotation.
-- **Frontend** — Next.js 14 (App Router), Tailwind glassmorphism UI, Recharts, and framer-motion.
-- **Retrieval Engine** — hybrid search combining pgvector embeddings with BM25, cross-encoder reranking, and query expansion.
+- **Backend** — Express 4 with **BullMQ queues**, Pino logging, zod validation, PostgreSQL 16 + pgvector, Redis 7, and MinIO (S3-compatible) storage. JWT auth with refresh-token rotation.
+- **Frontend** — Next.js 14 (App Router), glassmorphism Tailwind UI, Recharts, framer-motion, with SSE streaming chat and conversation sharing (passcode + expiry).
+- **Retrieval Engine** — hybrid vector + BM25 search, cross-encoder reranking, query expansion.
 - **Agent Engine** — autonomous workflows for summarization, comparison, cross-referencing, and checklist generation.
-- **LLM Layer** — Ollama (nomic-embed-text + llama3.2) for local inference, with pluggable support for OpenAI, Anthropic, and Google.
+- **Infrastructure** — **Docker Compose** provisions Postgres, Redis, and MinIO; Prometheus + Grafana give full observability; a Cloudflare tunnel script exposes it cleanly.
 
-## Key Features
+## Impact
 
-- **Document Ingestion** — upload PDF/DOCX/MD/TXT/HTML, or import directly from GitHub and URLs.
-- **Chat with RAG** — SSE streaming answers with inline citations and a retrieval inspector.
-- **Conversation Sharing** — share chats with passcode and expiry controls.
-- **Monitoring** — Prometheus + Grafana dashboards and a Cloudflare tunnel deployment script.
+- Teams get **plain-language answers with receipts** — citations and the retrieved passages, not opaque text.
+- **Privacy stays intact** — local inference keeps sensitive docs on-premise by default.
+- Document pipelines scale with **queues and distributed storage** rather than grinding on a single process.
+- The platform is **observable and deployable** — one host today, horizontally scaled workers tomorrow.
 
-## Infrastructure
+## Lessons
 
-Docker Compose provisions Postgres, Redis, and MinIO; the entire stack is designed to run on a single host or scale horizontally with queue-based workers.
+- **Retrieval quality is the whole game.** Reranking and query expansion moved answers from "plausible" to "citable" — the LLM was never the hard part.
+- **Citations build trust.** The retrieval inspector is the feature users actually relied on; confidence comes from being able to check the source.
+- **Local-first is a feature, not a compromise.** Designing around Ollama forced efficiency and privacy into the core instead of bolting them on.

@@ -16,25 +16,41 @@ highlights:
   - "Stripe-integrated billing across Demo/Starter/Pro/Enterprise tiers"
 ---
 
-## Overview
+## Introduction
 
-NQ-Shield is a multi-tenant SaaS platform that issues, activates, and verifies software licenses with strong cryptographic guarantees. It is designed for enterprise entitlement management where licensing must survive offline environments and resist tampering.
+For any software vendor, licensing is where revenue meets reality. NQ-Shield began as a response to a very common and expensive corporate problem: **desktop and offline software is trivially easy to pirate, and mainstream licensing solutions assume a permanent internet connection that enterprise customers simply don't have.** The goal was a licensing platform that a vendor could trust even when their customers' machines were offline, months and meters away from any server.
+
+## The Problem
+
+Traditional licensing has a tension the industry rarely resolves honestly:
+
+- **Online-only licensing** (subscription-style) guarantees control but breaks in air-gapped and offline environments — shipping docks, hospital networks, field laptops, industrial sites.
+- **Offline licensing** (serial keys) usually means *no enforcement at all* — a key can be shared, a binary can be patched, and there is no way to prove a license is genuine.
+- **No tenant boundaries.** When one platform serves many vendors, one vendor's data leaking into another's is a hard failure, not a nicety.
+- **Easily reversed.** Even SDKs meant to verify licenses were often thin, and a determined cracker could trace the check and strip it out.
+
+## The Solution
+
+NQ-Shield re-architected offline licensing around **cryptographic trust instead of connection checks**. The platform issues licenses signed with **per-tenant PGP keys**, bound to a device **hardware identifier (HWID)**, and protected against replay with nonce tracking. Because the license itself is *signed*, verification can succeed fully offline — the machine doesn't have to ask permission, it just checks the signature and the binding.
+
+To defend the client side, the **nq-shield-sdk** was deliberately hardened: a TypeScript SDK (`4.0.0-ultra-hardened`) compiled to **WASM**, bundled with **polymorphic** transformations, and obfuscated so that stripping the check becomes meaningfully expensive. This is defense in depth, not a silver bullet — the cryptography does the hard work; the hardening raises the cost of attacking it.
 
 ## Architecture
 
-The platform is split into three components:
+- **License Server** — NestJS 10 with 13 focused modules (auth, tenant, user, product, license, activation, verification, api-key, webhook, billing, file, pgp, audit). PostgreSQL + Prisma 5, OpenPGP for signing, Passport/JWT + API-key auth, `@nestjs/throttler` for rate limiting, and **ioredis** for anti-replay nonce tracking.
+- **License Admin** — a React 18 + Vite + Tailwind dashboard to manage products, generate licenses, and review activations, including an AI support chatbot.
+- **nq-shield-sdk** — the hardened verification client (`activateLicense`, `verifyLicense`, `deactivateLicense`) with PGP signature checking and HWID binding.
+- **Tenant isolation** is enforced as row-level security inside the data layer, so multiple vendors coexist safely on one platform.
 
-- **License Server** — NestJS 10 backend with 13 modules (auth, tenant, user, product, license, activation, verification, api-key, webhook, billing, file, pgp, audit). Uses PostgreSQL + Prisma 5, OpenPGP for license signing, Passport/JWT and API-key auth, `@nestjs/throttler` rate limiting, and ioredis for anti-replay nonce tracking.
-- **License Admin** — React 18 + Vite + Tailwind dashboard for managing products, generating licenses, and reviewing activations, with an AI support chatbot.
-- **nq-shield-sdk** — a hardened TypeScript SDK (`4.0.0-ultra-hardened`) featuring a WASM build, polymorphic bundling, and obfuscation to resist reverse-engineering. It exposes `activateLicense`, `verifyLicense`, and `deactivateLicense` with PGP signature verification and HWID binding.
+## Impact
 
-## Security Model
+- Products can ship **offline-first** — verified locally by signature, not by network reachability.
+- Piracy tolerance drops because copies are HWID-bound and replay is blocked; patched binaries must defeat hardened WASM.
+- Vendors self-serve via the admin dashboard and **Stripe integrated tiers** (Demo/Starter/Pro/Enterprise).
+- Every activation and verification is **audited**, giving vendors compliance-grade visibility.
 
-- **Offline-First Validation** — licenses verify locally against cryptographic signatures without requiring a live connection.
-- **Anti-Replay Protection** — timestamp + nonce + signature prevents replaying captured activation requests.
-- **Tenant Isolation** — row-level security keeps tenant data fully separated.
-- **Audit Trail** — every activation, verification, and license action is logged.
+## Lessons
 
-## API & Delivery
-
-A documented REST API (`/v1/...`) with Swagger docs is served alongside Docker Compose orchestration and Windows/Linux start scripts, making the whole stack production-deployable.
+- **Trust the signature, not the connection.** Moving trust into the license payload unlocked offline use without surrendering control — the single most valuable design decision.
+- **Defense in depth on the client.** Nothing on the client is truly unbreakable; the goal is to make breaking it cost more than the license is worth.
+- **Multi-tenancy is a security feature.** Making isolation structural (not incidental) is what allows a SaaS licensing platform to exist at all.

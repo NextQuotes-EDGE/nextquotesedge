@@ -14,24 +14,44 @@ highlights:
   - "Map-based incident browsing and moderation"
 ---
 
-## Overview
+## Introduction
 
-IReport is a public-safety incident-reporting mobile application. Citizens can report incidents, flag missing or wanted persons, trigger SOS alerts, and maintain emergency contacts — while moderators review and validate submissions before they go public.
+In many communities, citizens who spot a problem — an incident, a missing person, a safety concern — have no structured way to report it, and no way to trust that the report was seen and acted on. IReport is a public-safety incident-reporting mobile application designed to close that gap: letting citizens report, alert, and browse, while giving moderators a controlled review pipeline to keep public data trustworthy.
 
-## Scope
+## The Problem
 
-This project is delivered as a **product design and mobile architecture** effort, combining a Turbo monorepo scaffold (`apps/mobile` with Expo Router) with exhaustive design and API documentation:
+- **Reporting is ad hoc.** There is no consistent, structured channel for a citizen to report an incident, a missing person, or a wanted person — so valuable information reaches authorities in fragments or not at all.
+- **Trust requires moderation.** If anyone can post anything, the public feed quickly becomes unusable — reports must be **reviewed and validated** before going live, at scale.
+- **Urgency is a category of its own.** In a genuine emergency, a citizen needs an **SOS path** and configured emergency contacts, not a long form.
+- **Location matters.** Public-safety information is inherently geographic, and browsing it needs to be map-based to be useful.
 
-- **Detailed API surface** (`API_SURFACE.md`) defining the incident, person, SOS, and moderation endpoints.
-- **Database schema** (`DATABASE_SCHEMA.md`) for incidents, users, moderators, and emergency data.
-- **UI plan** with ~25 fully-specified screens and HTML mockups.
+## The Solution
 
-## Key Features
+IReport is architected as a **product design and mobile architecture** effort built around a small set of core flows:
 
-- **Incident Reporting** — structured submissions with location, category, and evidence.
-- **Missing / Wanted Persons** — searchable registry with photos and status.
-- **SOS & Emergency Contacts** — one-tap urgency with configured contacts.
-- **Moderation** — review workflow keeps public data trustworthy.
-- **Maps** — geospatial browsing of nearby incidents.
+- **Incident reporting** — structured submissions with location, category, and evidence, so agencies get usable data, not free-text noise.
+- **Missing / wanted persons** — a searchable registry with photos and status, giving the community a way to help recovery efforts.
+- **SOS & emergency contacts** — a one-tap urgency path with pre-configured contacts, because in the moment speed matters more than form completeness.
+- **Moderation** — a review workflow that validates submissions before they reach the public feed, protecting data quality and trust.
+- **Map-based browsing** — geospatial viewing of nearby incidents so the feed is navigable by place, not just by time.
 
-IReport demonstrates end-to-end thinking: from domain modeling and API design through to a functional mobile scaffold ready for implementation.
+## Architecture
+
+The project combines a **Turbo monorepo scaffold** (`apps/mobile` with Expo Router) with exhaustive design and API documentation:
+
+- **`API_SURFACE.md`** — defines the incident, person, SOS, and moderation endpoints.
+- **`DATABASE_SCHEMA.md`** — models incidents, users, moderators, and emergency data.
+- **UI plan** — roughly **25 fully-specified screens** with HTML mockups, so the experience is designed before it's built.
+
+## Impact
+
+- Citizens get a **single, credible channel** to report safety information.
+- Moderated, validated data keeps the **public feed trustworthy** at scale.
+- SOS and emergency contacts give users a **reliable path in an urgent moment**.
+- The documented spec (API + schema + UI) makes the platform **ready to implement** without ambiguity.
+
+## Lessons
+
+- **Moderation is a feature, not a constraint.** Designing the review pipeline into the core flow is what protects the product's value once usage grows.
+- **Design before you code.** The ~25 screen specs and API/schema docs caught product gaps early and made the build scope concrete.
+- **Urgent flows must be frictionless.** The SOS path is deliberately the *shortest* flow, because form completeness is a liability in an emergency.
