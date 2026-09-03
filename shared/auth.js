@@ -61,7 +61,11 @@ export async function verifyToken({ accessToken }) {
 
 export function renderAuthPage(provider, data, siteUrl) {
   const origin = getAuthOrigin(siteUrl);
-  const encoded = JSON.stringify(data).replace(/</g, '\\u003c');
+  // Decap's GitHub backend reads the access token from `state.token`, so the
+  // message must expose the access token under a `token` key (not just
+  // `access_token` which is what GitHub's exchange response uses).
+  const authData = {...data, token: data.access_token};
+  const encoded = JSON.stringify(authData).replace(/</g, '\\u003c');
   return `<!doctype html>
 <html lang="en">
   <head>
