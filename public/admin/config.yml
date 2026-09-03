@@ -8,7 +8,9 @@ backend:
 publish_mode: editorial_workflow
 site_url: https://nextquotesedge.vercel.app
 display_url: https://nextquotesedge.vercel.app
-logo_url: https://avatars.githubusercontent.com/u/189423475
+logo_url: /admin/logo.svg
+admin_css:
+  - /admin/cms.css
 media_folder: public/images
 public_folder: /images
 

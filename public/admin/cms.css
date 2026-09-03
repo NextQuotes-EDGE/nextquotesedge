@@ -1,0 +1,44 @@
+/* NextQuotesEdge — Decap CMS brand theme */
+
+/* Full-screen login page: dark brand background with subtle glow */
+[class*="StyledAuthenticationPage"] {
+  background-color: #0B0F19 !important;
+  background-image:
+    radial-gradient(circle at 20% 25%, rgba(108, 92, 231, 0.18), transparent 55%),
+    radial-gradient(circle at 80% 80%, rgba(108, 92, 231, 0.12), transparent 55%) !important;
+}
+
+/* Branded logo block */
+[class*="CustomIconWrapper"] {
+  display: flex !important;
+  justify-content: center !important;
+}
+
+[class*="CustomIconWrapper"] img {
+  border-radius: 18px !important;
+  box-shadow: 0 20px 60px rgba(108, 92, 231, 0.35) !important;
+}
+
+/* Primary login button */
+[class*="LoginButton"] {
+  background-color: #6C5CE7 !important;
+  color: #ffffff !important;
+  border: none !important;
+  border-radius: 10px !important;
+  box-shadow: 0 10px 30px rgba(108, 92, 231, 0.4) !important;
+  font-weight: 600 !important;
+}
+
+[class*="LoginButton"]:hover {
+  background-color: #5a4bd4 !important;
+}
+
+[class*="LoginButton"]:disabled {
+  background-color: #6C5CE7 !important;
+  opacity: 0.6 !important;
+}
+
+/* In-page (non-login) links use brand-adjacent gray */
+[class*="StyledAuthenticationPage"] a {
+  color: #a1a1aa !important;
+}
