@@ -7,7 +7,6 @@ import {
   exchangeCodeForToken,
   renderAuthPage,
   renderErrorPage,
-  verifyToken,
 } from '../shared/auth.js';
 
 function getSiteUrl() {
@@ -41,19 +40,6 @@ export default async function handler(req, res) {
         code,
         redirectUri,
       });
-
-      // Verify the exchanged token against GitHub and surface any failure with
-      // details (status, message, granted scopes) so the cause is clear.
-      const verification = await verifyToken({ accessToken: data.access_token });
-      if (!verification.ok) {
-        const detail = `GitHub rejected the access token (HTTP ${verification.status}: ${
-          verification.message || 'unknown'
-        }). Granted scopes: ${verification.scopes || '(none)'}.`;
-        return res
-          .status(200)
-          .setHeader('Content-Type', 'text/html')
-          .send(renderErrorPage(provider, detail, siteUrl));
-      }
 
       return res
         .status(200)

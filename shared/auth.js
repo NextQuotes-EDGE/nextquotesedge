@@ -39,26 +39,6 @@ export async function exchangeCodeForToken({ clientId, clientSecret, code, redir
   return data;
 }
 
-// Verifies a freshly-exchanged access token against GitHub's /user endpoint.
-// Mirrors Decap's request style (token keyword) so we confirm the token Decap
-// will actually use is valid, and capture the granted scopes.
-export async function verifyToken({ accessToken }) {
-  const res = await fetch('https://api.github.com/user', {
-    headers: {
-      Authorization: `token ${accessToken}`,
-      Accept: 'application/vnd.github+json',
-    },
-  });
-  const body = await res.json().catch(() => ({}));
-  return {
-    status: res.status,
-    ok: res.ok,
-    login: body.login || null,
-    message: body.message || null,
-    scopes: res.headers.get('x-oauth-scopes') || null,
-  };
-}
-
 export function renderAuthPage(provider, data, siteUrl) {
   const origin = getAuthOrigin(siteUrl);
   // Decap's GitHub backend reads the access token from `state.token`, so the
@@ -73,16 +53,10 @@ export function renderAuthPage(provider, data, siteUrl) {
     <title>Authorizing ${provider}</title>
   </head>
   <body>
-    <p id="diag" style="font-family: sans-serif; padding: 8px;">Authorizing ${provider}…</p>
     <script>
       (function () {
         var provider = '${provider}';
         var message = ${encoded};
-        var grantedScope = message.scope || '(no scope)';
-        try {
-          document.getElementById('diag').textContent = 'Granted scope: ' + grantedScope;
-        } catch (e) {}
-        console.log('OAuth granted scope:', grantedScope);
 
         function receiveMessage(e) {
           if (e.data === 'authorizing:' + provider && e.origin === '${origin}') {
