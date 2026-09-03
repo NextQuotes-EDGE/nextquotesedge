@@ -9,6 +9,7 @@ import {
   exchangeCodeForToken,
   renderAuthPage,
   renderErrorPage,
+  verifyToken,
 } from './shared/auth.js';
 
 const DEV_SITE_URL = 'http://localhost:5173';
@@ -102,6 +103,15 @@ export default defineConfig(({mode}) => {
                   code,
                   redirectUri,
                 });
+                const verification = await verifyToken({accessToken: data.access_token});
+                if (!verification.ok) {
+                  const detail = `GitHub rejected the access token (HTTP ${verification.status}: ${
+                    verification.message || 'unknown'
+                  }). Granted scopes: ${verification.scopes || '(none)'}.`;
+                  res.statusCode = 200;
+                  res.setHeader('Content-Type', 'text/html');
+                  return res.end(renderErrorPage(provider, detail, DEV_SITE_URL));
+                }
                 res.statusCode = 200;
                 res.setHeader('Content-Type', 'text/html');
                 return res.end(renderAuthPage(provider, data, DEV_SITE_URL));
