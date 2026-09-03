@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+# Pre-commit guard: block commits that would put real credentials into the
+# tracked .env.example template. .env.example must contain ONLY placeholders;
+# real secrets go in the untracked .env file.
+
+set -euo pipefail
+
+FILE=".env.example"
+
+if ! git diff --cached --name-only --quiet -- "$FILE"; then
+  CONTENT=$(git show ":$FILE" 2>/dev/null || true)
+
+  # Any value other than the exact placeholder is treated as a secret and
+  # blocks the commit.
+  for KEY in GITHUB_CLIENT_ID GITHUB_CLIENT_SECRET; do
+    VALUE=$(printf '%s' "$CONTENT" | sed -n "s/.*${KEY}=\"\([^\"]*\)\".*/\1/p" | head -n1)
+    SHORT=$(printf '%s' "${KEY#GITHUB_CLIENT_}" | tr '[:upper:]' '[:lower:]')
+    PLACEHOLDER="your-github-client-${SHORT}"
+
+    if [ -n "$VALUE" ] && [ "$VALUE" != "${PLACEHOLDER}" ]; then
+      echo "error: .env.example contains a real value for ${KEY}." >&2
+      echo "Put real credentials only in the untracked .env file, not .env.example." >&2
+      exit 1
+    fi
+  done
+fi
+
+exit 0
