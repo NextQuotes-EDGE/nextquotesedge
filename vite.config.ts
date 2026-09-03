@@ -4,6 +4,14 @@ import fs from 'fs';
 import path from 'path';
 import {defineConfig, loadEnv} from 'vite';
 import {validateContactPayload, sendContactEmail} from './shared/contact.js';
+import {
+  buildAuthorizeUrl,
+  exchangeCodeForToken,
+  renderAuthPage,
+  renderErrorPage,
+} from './shared/auth.js';
+
+const DEV_SITE_URL = 'http://localhost:5173';
 
 export default defineConfig(({mode}) => {
   const env = loadEnv(mode, '.', '');
@@ -60,6 +68,57 @@ export default defineConfig(({mode}) => {
             } else {
               next();
             }
+          });
+        },
+      },
+      {
+        name: 'api-auth-dev',
+        configureServer(server) {
+          server.middlewares.use('/api/auth', async (req, res) => {
+            const clientId = env.GITHUB_CLIENT_ID;
+            const clientSecret = env.GITHUB_CLIENT_SECRET;
+
+            if (!clientId || !clientSecret) {
+              res.statusCode = 500;
+              res.setHeader('Content-Type', 'application/json');
+              return res.end(
+                JSON.stringify({
+                  error:
+                    'GITHUB_CLIENT_ID and GITHUB_CLIENT_SECRET environment variables are not configured.',
+                }),
+              );
+            }
+
+            const url = new URL(req.url, DEV_SITE_URL);
+            const provider = url.searchParams.get('provider') || 'github';
+            const redirectUri = `${DEV_SITE_URL}/api/auth`;
+            const code = url.searchParams.get('code');
+
+            if (code) {
+              try {
+                const data = await exchangeCodeForToken({
+                  clientId,
+                  clientSecret,
+                  code,
+                  redirectUri,
+                });
+                res.statusCode = 200;
+                res.setHeader('Content-Type', 'text/html');
+                return res.end(renderAuthPage(provider, data, DEV_SITE_URL));
+              } catch (err) {
+                res.statusCode = 200;
+                res.setHeader('Content-Type', 'text/html');
+                return res.end(
+                  renderErrorPage(provider, err.message || 'OAuth token exchange failed', DEV_SITE_URL),
+                );
+              }
+            }
+
+            const scope = url.searchParams.get('scope') || 'repo';
+            const authUrl = buildAuthorizeUrl({clientId, scope, redirectUri});
+            res.statusCode = 302;
+            res.setHeader('Location', authUrl);
+            res.end();
           });
         },
       },

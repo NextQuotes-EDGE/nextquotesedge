@@ -1,0 +1,99 @@
+// Shared GitHub OAuth logic for Decap CMS.
+// Used by the Vercel serverless function (api/auth.js) and the Vite dev
+// middleware (vite.config.ts) so behavior matches in both environments.
+
+const GITHUB_AUTHORIZE_URL = 'https://github.com/login/oauth/authorize';
+const GITHUB_TOKEN_URL = 'https://github.com/login/oauth/access_token';
+
+export function getAuthOrigin(siteUrl) {
+  return siteUrl;
+}
+
+export function buildAuthorizeUrl({ clientId, scope, redirectUri }) {
+  return (
+    `${GITHUB_AUTHORIZE_URL}?client_id=${encodeURIComponent(clientId)}` +
+    `&redirect_uri=${encodeURIComponent(redirectUri)}` +
+    `&scope=${encodeURIComponent(scope)}`
+  );
+}
+
+export async function exchangeCodeForToken({ clientId, clientSecret, code, redirectUri }) {
+  const response = await fetch(GITHUB_TOKEN_URL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+    },
+    body: JSON.stringify({
+      client_id: clientId,
+      client_secret: clientSecret,
+      code,
+      redirect_uri: redirectUri,
+    }),
+  });
+
+  const data = await response.json();
+  if (data.error) {
+    throw new Error(data.error_description || data.error);
+  }
+  return data;
+}
+
+export function renderAuthPage(provider, data, siteUrl) {
+  const origin = getAuthOrigin(siteUrl);
+  const encoded = JSON.stringify(data).replace(/</g, '\\u003c');
+  return `<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Authorizing ${provider}</title>
+  </head>
+  <body>
+    <script>
+      (function () {
+        var provider = '${provider}';
+        var message = ${encoded};
+
+        function receiveMessage(e) {
+          if (e.data === 'authorizing:' + provider && e.origin === '${origin}') {
+            window.removeEventListener('message', receiveMessage, false);
+            window.opener.postMessage(
+              'authorization:' + provider + ':success:' + JSON.stringify(message),
+              e.origin,
+            );
+            window.close();
+          }
+        }
+        window.addEventListener('message', receiveMessage, false);
+        window.opener.postMessage('authorizing:' + provider, '${origin}');
+      })();
+    </script>
+  </body>
+</html>`;
+}
+
+export function renderErrorPage(provider, err, siteUrl) {
+  const origin = getAuthOrigin(siteUrl);
+  const encoded = JSON.stringify({ message: err }).replace(/</g, '\\u003c');
+  return `<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Authorization Failed</title>
+  </head>
+  <body>
+    <script>
+      (function () {
+        var provider = '${provider}';
+        var err = ${encoded};
+
+        window.opener.postMessage(
+          'authorization:' + provider + ':error:' + JSON.stringify(err),
+          '${origin}',
+        );
+        window.close();
+      })();
+    </script>
+  </body>
+</html>`;
+}
