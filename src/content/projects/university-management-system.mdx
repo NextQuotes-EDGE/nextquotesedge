@@ -7,8 +7,38 @@ featured: false
 status: "Ongoing"
 categories: ["Education"]
 techStack: ["React", "TypeScript", "Vite", "Tailwind CSS", "shadcn/ui", "Recharts"]
+githubUrl: "https://github.com/NextQuotes-EDGE/university-management-system"
+highlights:
+  - "Six role-specific dashboards (Admin, Academic Staff, Non-Academic Admin, Student, Lecturer)"
+  - "Unified seven-step enrollment workflow with JAMB registry verification"
+  - "Role-based access control enforced across every module"
+  - "Audit logging and Nigerian states/LGA data for local eligibility"
 ---
 
 ## Overview
 
-Coming soon. Edit this project using the admin panel at /admin.
+The University Management System (UMS) is a comprehensive web-based academic administration platform designed to digitize the day-to-day operations of higher-education institutions. Built around role-based dashboards, it centralizes enrollment, results, attendance, finance and payroll, library, CBT exams, and analytics in a single coherent system.
+
+## Architecture
+
+The project is organized as a **pnpm monorepo** with two major parts:
+
+- **Frontend** — a React 18 + TypeScript app built with Vite, React Router v7, Tailwind CSS v4, and shadcn/ui / Radix UI components, using Recharts for analytics dashboards.
+- **Student Gateway Backend** — an Express + Prisma 6 service handling payments and admissions, secured with JWT auth, request rate-limiting, and zod input validation.
+
+Data flows are abstracted behind a service layer so the UI can run against mock data (with LocalStorage persistence) or a live API without changing components.
+
+## Key Modules
+
+- **Admissions & Enrollment** — a guided seven-step application flow with live JAMB registry verification and eligibility checks based on Nigerian state/LGA data.
+- **Academic Records** — course registration, results management, and grade publishing per role.
+- **Attendance & Timetabling** — class tracking and scheduling.
+- **Finance & Payroll** — ledger-aware accounting for institutional staff.
+- **Library** — catalog and circulation management.
+- **CBT Exams** — integrated computer-based testing delivery.
+- **Reports & Analytics** — aggregate dashboards with Recharts visualizations.
+- **Audit Logs** — traceable administrative actions for accountability.
+
+## Why It Matters
+
+The system demonstrates how a large, multi-role domain can be modeled with clear separation of concerns: a design-system-driven frontend, a hardened gateway API, and role-based access that keeps every user's view scoped to their responsibilities.

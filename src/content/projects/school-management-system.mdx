@@ -7,8 +7,37 @@ featured: false
 status: "Ongoing"
 categories: ["Education"]
 techStack: ["Next.js", "Express", "PostgreSQL", "Prisma", "TypeScript", "JWT"]
+githubUrl: "https://github.com/NextQuotes-EDGE/school-management-system"
+highlights:
+  - "Three-app architecture: public website, student portal, and Express backend"
+  - "8-role RBAC from SUPER_ADMIN to STUDENT with fine-grained permissions"
+  - "Paystack payment integration for acceptance fees and invoices"
+  - "Integrated CBT exam engine with secure delivery"
+  - "Production deployment proposal for a Nigerian VPS (Hetzner + PM2 + nginx)"
 ---
 
 ## Overview
 
-Coming soon. Edit this project using the admin panel at /admin.
+The CONMSIT School Management System is a full-stack platform built for the College of Nursing Sciences, Calabar. It combines a public-facing website, a standalone student and staff portal, and a hardened REST backend into one npm-workspace monorepo — delivering registration, payments, academic records, results, and CBT exams in a single system.
+
+## Architecture
+
+The monorepo is split into three applications:
+
+- **School Website** — Next.js 16 public site with brochure content, admissions information, and downloadable PDFs (jsPDF / jspdf-autotable).
+- **Student / Staff Portal** — Next.js dashboard for results, payments, profiles, and CBT exams.
+- **Backend API** — Express 4.18 + Prisma 5.8 + PostgreSQL with JWT access/refresh token rotation, bcrypt, zod validation, helmet, sanitize-html, and express-rate-limit.
+
+The data model is extensively documented in `architecture.md` with 21 models and 10 enums spanning a 8-role RBAC system.
+
+## Key Features
+
+- **Registration & Admissions** — multi-step admission forms with NIN, address, next-of-kin, and O-Level details.
+- **Payments** — Paystack inline payment with dedicated callback and webhook endpoints for payment confirmation.
+- **Academic Records** — results, resits, and graduation clearance workflows.
+- **CBT Exams** — secure computer-based testing delivered through the portal.
+- **Role-Based Access** — separate dashboards for SUPER_ADMIN, ADMIN, FINANCE, HOD, LECTURER, CLINICAL, STUDENT, and STAFF.
+
+## Deployment Approach
+
+Beyond code, the project includes a realistic deployment proposal targeting a Hetzner CPX42 VPS with PM2 and nginx reverse proxy, a `.com.ng` domain, and Google Workspace email — reflecting real commercial delivery rather than just a prototype.

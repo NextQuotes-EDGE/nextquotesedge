@@ -1,0 +1,36 @@
+---
+title: "Nayvi"
+slug: "nayvi"
+date: "2026-09-03"
+summary: "A communications copilot — Expo React Native mobile app paired with a Next.js admin dashboard, backed by Supabase with Google authentication for intelligent conversation workflows."
+featured: false
+status: "Ongoing"
+categories: ["Mobile", "AI"]
+techStack: ["React Native", "Expo", "Supabase", "Next.js", "TypeScript"]
+githubUrl: "https://github.com/NextQuotes-EDGE/nayvi"
+highlights:
+  - "Expo React Native mobile app with expo-router"
+  - "Supabase backend with Google authentication"
+  - "Next.js admin dashboard for management and oversight"
+  - "EAS build configuration ready for distribution"
+---
+
+## Overview
+
+Nayvi is a communications copilot delivered as a pair of applications: an **Expo React Native mobile app** and a **Next.js admin dashboard**, sharing a **Supabase** backend. The mobile app handles the user-facing conversation experience, while the dashboard provides management and oversight.
+
+## Architecture
+
+- **Mobile App** — Expo SDK 54 with React Native 0.81, expo-router for navigation, and `expo-auth-session` for Google authentication.
+- **Backend** — Supabase (`@supabase/supabase-js`) for auth, data, and real-time features.
+- **Admin Dashboard** — Next.js front end for configuration and management.
+- **Deployment** — EAS (`eas.json`) configured for building and distributing the mobile app.
+
+## Key Features
+
+- **Google Sign-In** — frictionless authentication through the Supabase OAuth flow.
+- **Mobile-First UX** — conversation-driven interface optimized for on-device use.
+- **Admin Oversight** — centralized management through the web dashboard.
+- **Ready to Ship** — production build configuration via Expo Application Services.
+
+Nayvi showcases a clean client + BaaS architecture spanning mobile and web, with a production-ready build pipeline.

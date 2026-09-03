@@ -4,11 +4,37 @@ slug: "nq-shield"
 date: "2026-05-01"
 summary: "A multi-tenant SaaS licensing platform with PGP encryption, JWT authentication, Stripe integration, and anti-replay protection for enterprise entitlement management."
 featured: false
-status: "Ongoing"
+status: "Finished"
 categories: ["Infrastructure"]
 techStack: ["NestJS", "React", "PostgreSQL", "Redis", "Docker", "Prisma"]
+githubUrl: "https://github.com/NextQuotes-EDGE/NQSHIELD"
+highlights:
+  - "PGP-signed licenses with per-tenant signing keys"
+  - "Offline-first validation with HWID binding and anti-replay nonces"
+  - "Hardened TypeScript SDK with WASM build and polymorphism to resist reverse-engineering"
+  - "Multi-tenant isolation, JWT + API-key auth, and full audit logging"
+  - "Stripe-integrated billing across Demo/Starter/Pro/Enterprise tiers"
 ---
 
 ## Overview
 
-Coming soon. Edit this project using the admin panel at /admin.
+NQ-Shield is a multi-tenant SaaS platform that issues, activates, and verifies software licenses with strong cryptographic guarantees. It is designed for enterprise entitlement management where licensing must survive offline environments and resist tampering.
+
+## Architecture
+
+The platform is split into three components:
+
+- **License Server** — NestJS 10 backend with 13 modules (auth, tenant, user, product, license, activation, verification, api-key, webhook, billing, file, pgp, audit). Uses PostgreSQL + Prisma 5, OpenPGP for license signing, Passport/JWT and API-key auth, `@nestjs/throttler` rate limiting, and ioredis for anti-replay nonce tracking.
+- **License Admin** — React 18 + Vite + Tailwind dashboard for managing products, generating licenses, and reviewing activations, with an AI support chatbot.
+- **nq-shield-sdk** — a hardened TypeScript SDK (`4.0.0-ultra-hardened`) featuring a WASM build, polymorphic bundling, and obfuscation to resist reverse-engineering. It exposes `activateLicense`, `verifyLicense`, and `deactivateLicense` with PGP signature verification and HWID binding.
+
+## Security Model
+
+- **Offline-First Validation** — licenses verify locally against cryptographic signatures without requiring a live connection.
+- **Anti-Replay Protection** — timestamp + nonce + signature prevents replaying captured activation requests.
+- **Tenant Isolation** — row-level security keeps tenant data fully separated.
+- **Audit Trail** — every activation, verification, and license action is logged.
+
+## API & Delivery
+
+A documented REST API (`/v1/...`) with Swagger docs is served alongside Docker Compose orchestration and Windows/Linux start scripts, making the whole stack production-deployable.

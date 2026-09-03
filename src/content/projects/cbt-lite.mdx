@@ -7,8 +7,27 @@ featured: false
 status: "Finished"
 categories: ["Education"]
 techStack: ["Express.js", "PostgreSQL", "Prisma", "Vite", "JWT"]
+githubUrl: "https://github.com/NextQuotes-EDGE/NexEdge-SecureTest"
+highlights:
+  - "Runs entirely over local networks — no internet required"
+  - "Real-time auto-save and session recovery to survive interruptions"
+  - "Instant result processing after submission"
+  - "Reliable secure exam execution for environments without stable connectivity"
 ---
 
 ## Overview
 
-Coming soon. Edit this project using the admin panel at /admin.
+NexEdge SecureTest (CBT Lite) is an offline Computer Based Test (CBT) system built for schools. It delivers reliable, secure exam execution over local networks — with real-time auto-save, session recovery, and instant result processing — designed for environments where exams must run without internet and without failure.
+
+## Architecture
+
+The system pairs an **Express.js + PostgreSQL + Prisma** backend with a **Vite** frontend, using JWT for authentication. The offline-first design means the delivery mechanism is decoupled from external connectivity, so the exam session is resilient to network drops.
+
+## Key Features
+
+- **Offline-First Delivery** — exams are served and graded over the local network, eliminating dependence on external internet access.
+- **Auto-Save & Recovery** — student progress is persisted continuously and restored seamlessly if a session is interrupted.
+- **Instant Results** — submissions are processed immediately for fast, accurate scoring.
+- **Secure Execution** — authentication and integrity controls keep exam delivery tamper-resistant.
+
+This project focuses on the reliability layer that traditional online-exam platforms overlook: keeping high-stakes testing available and accurate even when the infrastructure is not.

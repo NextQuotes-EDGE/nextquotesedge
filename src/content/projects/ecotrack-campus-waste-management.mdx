@@ -7,8 +7,28 @@ featured: false
 status: "Ongoing"
 categories: ["Infrastructure"]
 techStack: ["React", "Express", "PostgreSQL", "Socket.IO", "Leaflet", "Zustand"]
+highlights:
+  - "Real-time waste-truck tracking via Socket.IO with interactive Leaflet maps"
+  - "Student gamification with points-based incentives for reporting"
+  - "Three-role dashboards: Student, Operator, and Admin"
+  - "Live analytics dashboards with Recharts"
 ---
 
 ## Overview
 
-Coming soon. Edit this project using the admin panel at /admin.
+EcoTrack is a modern campus waste-reporting and collection-tracking application. Students report waste issues and earn points, operators manage collection rounds, and admins see real-time analytics — all mapped live on an interactive canvas.
+
+## Architecture
+
+- **Backend** — Express + Socket.IO for real-time updates, Prisma 7 + PostgreSQL (via `@prisma/adapter-pg`), with helmet, cors, rate limiting, JWT + bcrypt auth, and zod validation.
+- **Frontend** — React 19 + Vite, Tailwind v4 + shadcn/ui, React Router 7, Zustand for state, Recharts for dashboards, and react-leaflet for maps.
+- **Realtime** — a server-side truck simulator streams live vehicle positions over Socket.IO, modeling realistic collection operations.
+
+## Key Features
+
+- **Student Waste Reporting** — report waste types, earn gamified points.
+- **Real-Time Tracking** — follow collection trucks live on a map.
+- **Operator Scheduling** — manage and coordinate collection rounds.
+- **Admin Analytics** — role-scoped dashboards for monitoring campus sustainability performance.
+
+EcoTrack is a functional full-stack prototype demonstrating real-time event streaming, geospatial mapping, and role-based multi-user interaction working together.

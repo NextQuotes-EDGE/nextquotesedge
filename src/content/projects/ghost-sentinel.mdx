@@ -7,8 +7,25 @@ featured: false
 status: "Ongoing"
 categories: ["Security"]
 techStack: ["Ollama", "Docker", "Python", "MCPwn", "Parrot OS"]
+highlights:
+  - "Dual offensive/defensive mode with role-based tool access"
+  - "LLM-orchestrated vulnerability discovery and attack-chain generation"
+  - "Strict target whitelists and RFC 2350-compliant disclosure"
+  - "GPG-signed immutable audit logs"
 ---
 
 ## Overview
 
-Coming soon. Edit this project using the admin panel at /admin.
+GhostSentinel is a security **architecture and design** for a dual-mode, AI-orchestrated vulnerability scanner. Inspired by Anthropic's Mythos, it is specified to integrate with Parrot OS 7.1+ native tooling — MCPwn, opencode, and Ollama LLMs — to drive autonomous recon, vulnerability discovery, and both red-team (offensive) and blue-team (defensive) workflows.
+
+## Design Scope
+
+This project is currently a design/specification artifact rather than a shipped tool. It documents the full system:
+
+- **Offensive Chain** — automated recon → vulnerability identification → an approval gate → AI-assisted exploit authoring in an isolated opencode session.
+- **Defensive Chain** — asset scanning → SIEM correlation → remediation workflows.
+- **Tool Orchestration** — coordinates over 800 Parrot OS security tools (nmap, sqlmap, Metasploit, Suricata, Wazuh, lynis) under LLM control.
+- **Safety Controls** — strict target whitelists, automatic blocking of government/health/critical-infrastructure scanning, and RFC 2350-compliant disclosure.
+- **Auditability** — GPG-signed, immutable logs of every action taken.
+
+Presented here as an honest demonstration of security-system design and threat-modeling thinking, rather than a deployable product.

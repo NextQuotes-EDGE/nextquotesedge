@@ -7,8 +7,36 @@ featured: false
 status: "Ongoing"
 categories: ["Infrastructure"]
 techStack: ["Next.js", "Express", "PostgreSQL", "Redis", "Ollama", "BullMQ"]
+githubUrl: "https://github.com/NextQuotes-EDGE/NexQ-Atlas"
+highlights:
+  - "Hybrid vector + BM25 search (pgvector) with cross-encoder reranking and query expansion"
+  - "Local LLM support via Ollama plus OpenAI, Anthropic, and Google providers"
+  - "Autonomous agent workflows for summarization, comparison, and cross-referencing"
+  - "SSE streaming chat with citations and retrieval inspector"
+  - "Full observability: Prometheus + Grafana, Docker Compose infra, MinIO storage"
 ---
 
 ## Overview
 
-Coming soon. Edit this project using the admin panel at /admin.
+NexQ Atlas is a full-stack Retrieval-Augmented Generation (RAG) platform for ingesting, indexing, and querying technical documentation. It is built as a Turborepo / pnpm monorepo and is architected to run document pipelines at scale with queues, distributed storage, and local-first LLM inference.
+
+## Architecture
+
+The monorepo contains six packages: `frontend`, `backend`, `agent-engine`, `retrieval-engine`, `shared`, and `infrastructure`. Key pieces include:
+
+- **Backend** — Express 4 with BullMQ queues, Pino logging, zod validation, PostgreSQL 16 + pgvector, Redis 7, and MinIO (S3-compatible object storage). JWT auth with refresh-token rotation.
+- **Frontend** — Next.js 14 (App Router), Tailwind glassmorphism UI, Recharts, and framer-motion.
+- **Retrieval Engine** — hybrid search combining pgvector embeddings with BM25, cross-encoder reranking, and query expansion.
+- **Agent Engine** — autonomous workflows for summarization, comparison, cross-referencing, and checklist generation.
+- **LLM Layer** — Ollama (nomic-embed-text + llama3.2) for local inference, with pluggable support for OpenAI, Anthropic, and Google.
+
+## Key Features
+
+- **Document Ingestion** — upload PDF/DOCX/MD/TXT/HTML, or import directly from GitHub and URLs.
+- **Chat with RAG** — SSE streaming answers with inline citations and a retrieval inspector.
+- **Conversation Sharing** — share chats with passcode and expiry controls.
+- **Monitoring** — Prometheus + Grafana dashboards and a Cloudflare tunnel deployment script.
+
+## Infrastructure
+
+Docker Compose provisions Postgres, Redis, and MinIO; the entire stack is designed to run on a single host or scale horizontally with queue-based workers.
