@@ -14,6 +14,9 @@ export type Project = {
   status?: 'Ongoing' | 'Finished';
   projectLink?: string;
   testLink?: string;
+  githubUrl?: string;
+  featuredImage?: string;
+  highlights?: string[];
   content: string;
   date?: string;
 }

@@ -1,0 +1,154 @@
+/* NextQuotesEdge — Decap CMS preview pane theme.
+   Mirrors the live site's dark brand look inside the editor preview frame. */
+
+.preview-body {
+  background-color: #0B0F19;
+  color: #e4e4e7;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.7;
+  padding: 24px 28px;
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.preview-body h1,
+.preview-body h2,
+.preview-body h3,
+.preview-body h4 {
+  color: #ffffff;
+  line-height: 1.25;
+  margin: 1.5em 0 0.5em;
+}
+
+.preview-body h1 {
+  font-size: 2rem;
+}
+
+.preview-body h2 {
+  font-size: 1.5rem;
+}
+
+.preview-body p {
+  color: #a1a1aa;
+  margin: 0 0 1em;
+}
+
+.preview-body a {
+  color: #6C5CE7;
+  text-decoration: none;
+}
+
+.preview-body a:hover {
+  text-decoration: underline;
+}
+
+.preview-body ul,
+.preview-body ol {
+  color: #d4d4d8;
+  margin: 0 0 1em;
+  padding-left: 1.5em;
+}
+
+.preview-body li {
+  margin-bottom: 0.25em;
+}
+
+.preview-body code {
+  background: rgba(108, 92, 231, 0.15);
+  color: #c4b5fd;
+  padding: 0.15em 0.4em;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+.preview-body pre {
+  background: #12172a;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 14px;
+  overflow-x: auto;
+}
+
+.preview-body pre code {
+  background: transparent;
+  padding: 0;
+  color: #e4e4e7;
+}
+
+.preview-body blockquote {
+  border-left: 3px solid #6C5CE7;
+  margin: 0 0 1em;
+  padding-left: 1em;
+  color: #a1a1aa;
+}
+
+.preview-body img {
+  max-width: 100%;
+  border-radius: 10px;
+  margin: 1em 0;
+}
+
+.preview-body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1em 0;
+}
+
+.preview-body th,
+.preview-body td {
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 8px 12px;
+  text-align: left;
+}
+
+.preview-body th {
+  color: #ffffff;
+}
+
+.preview-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.preview-badge {
+  font-size: 11px;
+  font-family: ui-monospace, "SF Mono", monospace;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 3px 9px;
+  border-radius: 999px;
+  border: 1px solid;
+}
+
+.preview-badge.status-ongoing {
+  color: #eab308;
+  background: rgba(234, 179, 8, 0.12);
+  border-color: rgba(234, 179, 8, 0.3);
+}
+
+.preview-badge.status-finished {
+  color: #22c55e;
+  background: rgba(34, 197, 94, 0.12);
+  border-color: rgba(34, 197, 94, 0.3);
+}
+
+.preview-badge.category {
+  color: #fff;
+  background: rgba(108, 92, 231, 0.3);
+  border-color: rgba(108, 92, 231, 0.5);
+}
+
+.preview-summary {
+  font-size: 1.125rem;
+  color: #d4d4d8;
+}
+
+.preview-highlight {
+  color: #fff;
+  font-weight: 700;
+  padding: 0 0 0 8px;
+  border-left: 2px solid #6C5CE7;
+  margin: 8px 0;
+}

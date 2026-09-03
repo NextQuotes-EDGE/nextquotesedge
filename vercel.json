@@ -8,6 +8,7 @@
     { "source": "/admin/config.yml", "destination": "/admin/config.yml" },
     { "source": "/admin/logo.svg", "destination": "/admin/logo.svg" },
     { "source": "/admin/cms.css", "destination": "/admin/cms.css" },
+    { "source": "/admin/preview.css", "destination": "/admin/preview.css" },
     { "source": "/admin", "destination": "/admin/index.html" },
     { "source": "/admin/:path*", "destination": "/admin/index.html" },
     { "source": "/(.*)", "destination": "/index.html" }

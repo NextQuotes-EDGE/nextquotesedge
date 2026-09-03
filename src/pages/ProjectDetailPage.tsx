@@ -4,7 +4,7 @@ import ReactMarkdown from 'react-markdown';
 import Navbar from '../components/Navbar.tsx';
 import CTA from '../components/CTA.tsx';
 import { useProjects } from '../lib/projects.ts';
-import { ChevronLeft, Calendar, Tag, ExternalLink } from 'lucide-react';
+import { ChevronLeft, Calendar, Tag, ExternalLink, Github } from 'lucide-react';
 
 export default function ProjectDetailPage() {
   const { slug } = useParams<{ slug: string }>();
@@ -58,8 +58,26 @@ export default function ProjectDetailPage() {
                 Access Beta Test <ExternalLink className="w-4 h-4" />
               </a>
             )}
+            {project.githubUrl && (
+              <a 
+                href={project.githubUrl} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-6 py-2 text-gray-300 border border-white/20 rounded font-bold hover:text-white hover:border-brand/60 transition-all text-sm"
+              >
+                <Github className="w-4 h-4" /> Source Code
+              </a>
+            )}
           </div>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6">{project.title}</h1>
+          {project.featuredImage && (
+            <img
+              src={project.featuredImage}
+              alt={project.title}
+              className="w-full aspect-[16/7] object-cover rounded-2xl border border-white/10 mb-8"
+              loading="lazy"
+            />
+          )}
           
           <div className="flex flex-wrap items-center gap-3 mb-8">
             {project.status && (
@@ -98,6 +116,20 @@ export default function ProjectDetailPage() {
 
           <p className="text-xl text-gray-400 leading-relaxed">{project.summary}</p>
         </header>
+
+        {project.highlights && project.highlights.length > 0 && (
+          <section className="mb-12">
+            <h2 className="text-lg font-bold mb-4 text-brand/90">Key Highlights</h2>
+            <ul className="space-y-2">
+              {project.highlights.map((highlight, i) => (
+                <li key={i} className="flex items-start gap-3 text-gray-300">
+                  <span className="mt-2 h-1.5 w-1.5 rounded-full bg-brand shrink-0" />
+                  {highlight}
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
 
         <div className="markdown-body">
           <ReactMarkdown>{project.content}</ReactMarkdown>

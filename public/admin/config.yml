@@ -11,6 +11,8 @@ display_url: https://nextquotesedge.vercel.app
 logo_url: /admin/logo.svg
 admin_css:
   - /admin/cms.css
+preview_styles:
+  - /admin/preview.css
 media_folder: public/images
 public_folder: /images
 
@@ -30,7 +32,7 @@ collections:
       - label: Slug
         name: slug
         widget: string
-        hint: URL-friendly identifier (e.g. "my-project")
+        hint: URL identifier. This is auto-derived from the file name, but keep it in sync (e.g. "my-project").
       - label: Date
         name: date
         widget: date
@@ -61,6 +63,22 @@ collections:
         name: testLink
         widget: string
         required: false
+      - label: GitHub URL
+        name: githubUrl
+        widget: string
+        required: false
+      - label: Featured Image
+        name: featuredImage
+        widget: image
+        required: false
+        choose_url: true
+        media_folder: public/images
+        public_folder: /images
+      - label: Highlights
+        name: highlights
+        widget: list
+        required: false
+        hint: Short bullet points shown on the project page.
       - label: Body
         name: body
         widget: markdown

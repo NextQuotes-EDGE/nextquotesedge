@@ -42,3 +42,75 @@
 [class*="StyledAuthenticationPage"] a {
   color: #a1a1aa !important;
 }
+
+/* ==== Editor chrome: dark brand theme ==== */
+html,
+body {
+  background-color: #0B0F19 !important;
+  color: #e4e4e7 !important;
+}
+
+/* Sidebar / navigation */
+[class*="AppMainContainer"],
+[class*="AppHeader"],
+[class*="CollectionCard"],
+[class*="GraphQLSidebar"] {
+  background-color: #0B0F19 !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+[class*="AppHeader"] {
+  border-bottom: 1px solid rgba(108, 92, 231, 0.3) !important;
+}
+
+[class*="AppHeader"] a,
+[class*="AppHeader"] button,
+[class*="AppHeader"] span {
+  color: #e4e4e7 !important;
+}
+
+/* Primary action buttons */
+[class*="styledButtonPrimary"],
+[class*="EditorToolbar"] button,
+button[type="submit"] {
+  background-color: #6C5CE7 !important;
+  border-color: #6C5CE7 !important;
+  color: #ffffff !important;
+}
+
+button[type="submit"]:hover,
+[class*="styledButtonPrimary"]:hover {
+  background-color: #5a4bd4 !important;
+}
+
+/* Inputs & text areas */
+[class*="TextInput"],
+[class*="SelectContainer"],
+[class*="EditorControlBar"] {
+  background-color: #12172a !important;
+  color: #e4e4e7 !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+[class*="TextInput"]::placeholder {
+  color: #6b7280 !important;
+}
+
+/* Editor top bar */
+[class*="EditorTopBar"] {
+  background-color: #0B0F19 !important;
+}
+
+/* Entry list rows */
+[class*="Card"],
+[class*="EntryCard"] {
+  background-color: #12172a !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+  color: #e4e4e7 !important;
+}
+
+/* Presentational text */
+[class*="resultText"],
+[class*="CollectionSearch"] input {
+  color: #e4e4e7 !important;
+}

@@ -119,8 +119,17 @@ export default function ProjectPreview({ project, featured = false }: ProjectPre
       </div>
 
       {featured && (
-        <div className="hidden md:flex items-center justify-center bg-brand/5 p-12">
-          <Code2 className="w-32 h-32 text-brand/20" />
+        <div className="hidden md:flex items-center justify-center bg-brand/5 p-12 overflow-hidden">
+          {project.featuredImage ? (
+            <img
+              src={project.featuredImage}
+              alt={project.title}
+              className="w-full h-full object-cover rounded-lg"
+              loading="lazy"
+            />
+          ) : (
+            <Code2 className="w-32 h-32 text-brand/20" />
+          )}
         </div>
       )}
     </motion.div>
