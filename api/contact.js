@@ -18,6 +18,6 @@ export default async function handler(req, res) {
     res.status(200).json({ ok: true });
   } catch (error) {
     console.error('Contact email error:', error.message);
-    res.status(500).json({ error: 'Failed to send your message. Please try again later.' });
+    res.status(500).json({ error: 'Failed to send your message. Please try again later.', detail: error.message });
   }
 }
