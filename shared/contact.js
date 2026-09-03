@@ -25,10 +25,22 @@ export function validateContactPayload(body = {}) {
   return { data, errors };
 }
 
+function envValue(value) {
+  if (typeof value !== 'string') return value;
+  const trimmed = value.trim();
+  if (
+    (trimmed.startsWith('"') && trimmed.endsWith('"')) ||
+    (trimmed.startsWith("'") && trimmed.endsWith("'"))
+  ) {
+    return trimmed.slice(1, -1);
+  }
+  return trimmed;
+}
+
 export async function sendContactEmail({ name, email, subject, message }, env = process.env) {
-  const apiKey = env.RESEND_API_KEY;
-  const from = env.CONTACT_FROM_EMAIL;
-  const to = env.CONTACT_TO_EMAIL;
+  const apiKey = envValue(env.RESEND_API_KEY);
+  const from = envValue(env.CONTACT_FROM_EMAIL);
+  const to = envValue(env.CONTACT_TO_EMAIL);
 
   if (!apiKey || !from || !to) {
     throw new Error('Contact email is not configured (RESEND_API_KEY, CONTACT_FROM_EMAIL, CONTACT_TO_EMAIL).');
@@ -73,7 +85,7 @@ export async function sendContactEmail({ name, email, subject, message }, env = 
 }
 
 async function sendConfirmationEmail(resend, { from, name, email }, env = process.env) {
-  const templateId = env.CONTACT_CONFIRM_TEMPLATE_ID;
+  const templateId = envValue(env.CONTACT_CONFIRM_TEMPLATE_ID);
   if (!templateId) return;
 
   const { error } = await resend.emails.send({
