@@ -49,10 +49,16 @@ export function renderAuthPage(provider, data, siteUrl) {
     <title>Authorizing ${provider}</title>
   </head>
   <body>
+    <p id="diag" style="font-family: sans-serif; padding: 8px;">Authorizing ${provider}…</p>
     <script>
       (function () {
         var provider = '${provider}';
         var message = ${encoded};
+        var grantedScope = message.scope || '(no scope)';
+        try {
+          document.getElementById('diag').textContent = 'Granted scope: ' + grantedScope;
+        } catch (e) {}
+        console.log('OAuth granted scope:', grantedScope);
 
         function receiveMessage(e) {
           if (e.data === 'authorizing:' + provider && e.origin === '${origin}') {
